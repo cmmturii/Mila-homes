@@ -1113,3 +1113,103 @@ textarea {
   .footer { grid-template-columns: 1fr; padding: 56px 22px; gap: 40px; }
   .footer-bottom { flex-direction: column; gap: 6px; padding: 16px 22px; }
 }
+/* =============================================
+   SOCIAL ICONS — NAV
+   ============================================= */
+.nav-socials {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.social-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s, opacity 0.2s;
+}
+.social-icon svg {
+  width: 17px;
+  height: 17px;
+}
+.social-icon:hover {
+  transform: translateY(-2px);
+  opacity: 0.85;
+}
+.social-icon.whatsapp {
+  background: #25D366;
+  color: white;
+}
+.social-icon.facebook {
+  background: #1877F2;
+  color: white;
+}
+
+/* =============================================
+   SOCIAL ICONS — FOOTER CONTACT
+   ============================================= */
+.contact-icon {
+  width: 16px;
+  height: 16px;
+  color: var(--gold);
+  flex-shrink: 0;
+}
+
+/* Social Buttons in footer */
+.footer-socials {
+  display: flex;
+  gap: 10px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+
+.social-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  border-radius: 3px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  transition: transform 0.2s, opacity 0.2s;
+  color: white;
+}
+.social-btn svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+.social-btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+.whatsapp-btn  { background: #25D366; }
+.facebook-btn  { background: #1877F2; }
+.maps-btn      { background: #EA4335; }
+
+/* Footer bottom social icons */
+.footer-bottom-socials {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.footer-bottom-socials a {
+  color: rgba(245, 240, 232, 0.45);
+  transition: color 0.2s, transform 0.2s;
+  display: flex;
+  align-items: center;
+}
+.footer-bottom-socials a:hover {
+  color: var(--gold);
+  transform: translateY(-2px);
+}
+
+/* Hide nav socials on mobile */
+@media (max-width: 960px) {
+  .nav-socials { display: none; }
+}
