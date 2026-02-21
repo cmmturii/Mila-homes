@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard — Mila Homes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700&family=DM+Sans:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root { --forest:#2a4a35; --gold:#c9973a; --cream:#f7f3ec; --charcoal:#1e1c18; --sage:#7a9e8e; }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:"DM Sans",sans-serif; background:#f0f0ec; color:var(--charcoal); }
+
+    /* LOGIN */
+    .login-screen {
+      min-height:100vh; display:flex; align-items:center; justify-content:center;
+      background: var(--forest);
+    }
+    .login-card { background:white; border-radius:4px; padding:40px; width:100%; max-width:380px; }
+    .login-card h1 { font-family:"Playfair Display",serif; color:var(--forest); font-size:1.6rem; margin-bottom:4px; }
+    .login-card p { color:rgba(30,28,24,0.5); font-size:0.85rem; margin-bottom:28px; }
+    .login-card label { font-size:0.68rem; letter-spacing:0.15em; text-transform:uppercase; color:var(--forest); font-weight:600; display:block; margin-bottom:6px; }
+    .login-card input { width:100%; padding:12px 14px; border:1.5px solid rgba(30,28,24,0.14); border-radius:3px; font-size:1rem; margin-bottom:16px; outline:none; }
+    .login-card input:focus { border-color:var(--forest); }
+    .login-btn { width:100%; background:var(--forest); color:white; border:none; padding:14px; font-size:0.8rem; font-weight:600; letter-spacing:0.14em; text-transform:uppercase; border-radius:3px; cursor:pointer; transition:background 0.2s; }
+    .login-btn:hover { background:var(--gold); color:var(--charcoal); }
+    .login-error { color:#e74c3c; font-size:0.8rem; margin-bottom:12px; display:none; }
+
+    /* DASHBOARD */
+    .dashboard { display:none; }
+
+    /* SIDEBAR */
+    .layout { display:grid; grid-template-columns:240px 1fr; min-height:100vh; }
+    .sidebar { background:var(--charcoal); padding:0; display:flex; flex-direction:column; }
+    .sidebar-logo { padding:28px 24px; border-bottom:1px solid rgba(255,255,255,0.08); }
+    .sidebar-logo h2 { font-family:"Playfair Display",serif; color:white; font-size:1.3rem; }
+    .sidebar-logo h2 span { color:var(--gold); font-style:italic; }
+    .sidebar-logo p { font-size:0.7rem; color:rgba(255,255,255,0.35); letter-spacing:0.1em; text-transform:uppercase; margin-top:3px; }
+    .sidebar-nav { padding:16px 0; flex:1; }
+    .nav-item {
+      display:flex; align-items:center; gap:12px; padding:12px 24px;
+      color:rgba(255,255,255,0.55); font-size:0.85rem; cursor:pointer;
+      transition:all 0.2s; border-left:3px solid transparent;
+    }
+    .nav-item:hover { color:white; background:rgba(255,255,255,0.05); }
+    .nav-item.active { color:white; background:rgba(255,255,255,0.08); border-left-color:var(--gold); }
+    .nav-item .icon { font-size:1rem; width:20px; text-align:center; }
+    .sidebar-footer { padding:20px 24px; border-top:1px solid rgba(255,255,255,0.08); }
+    .logout-btn { background:none; border:1px solid rgba(255,255,255,0.15); color:rgba(255,255,255,0.5); padding:8px 16px; border-radius:2px; font-size:0.75rem; cursor:pointer; width:100%; transition:all 0.2s; letter-spacing:0.1em; text-transform:uppercase; }
+    .logout-btn:hover { border-color:rgba(255,255,255,0.4); color:white; }
+
+    /* MAIN CONTENT */
+    .main { padding:32px; overflow-y:auto; }
+    .main-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:28px; }
+    .main-header h1 { font-family:"Playfair Display",serif; font-size:1.6rem; color:var(--forest); }
+    .main-header p { font-size:0.8rem; color:rgba(30,28,24,0.45); margin-top:2px; }
+    .refresh-btn { background:var(--forest); color:white; border:none; padding:10px 20px; border-radius:2px; font-size:0.75rem; font-weight:600; letter-spacing:0.12em; text-transform:uppercase; cursor:pointer; transition:background 0.2s; }
+    .refresh-btn:hover { background:var(--gold); color:var(--charcoal); }
+
+    /* STAT CARDS */
+    .stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-bottom:28px; }
+    .stat-card { background:white; border-radius:3px; padding:20px 24px; border:1px solid rgba(30,28,24,0.07); }
+    .stat-card .label { font-size:0.68rem; letter-spacing:0.14em; text-transform:uppercase; color:rgba(30,28,24,0.45); margin-bottom:8px; }
+    .stat-card .value { font-family:"Playfair Display",serif; font-size:2rem; color:var(--forest); }
+    .stat-card .value.gold { color:var(--gold); }
+    .stat-card .sub { font-size:0.72rem; color:rgba(30,28,24,0.4); margin-top:4px; }
+
+    /* BOOKINGS TABLE */
+    .table-card { background:white; border-radius:3px; border:1px solid rgba(30,28,24,0.07); overflow:hidden; }
+    .table-toolbar { padding:18px 24px; display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(30,28,24,0.07); }
+    .table-toolbar h3 { font-size:0.9rem; font-weight:600; color:var(--forest); }
+    .filter-tabs { display:flex; gap:4px; }
+    .filter-tab { padding:6px 14px; border:1px solid rgba(30,28,24,0.12); border-radius:20px; font-size:0.72rem; cursor:pointer; background:none; color:rgba(30,28,24,0.55); transition:all 0.2s; }
+    .filter-tab.active { background:var(--forest); color:white; border-color:var(--forest); }
+    table { width:100%; border-collapse:collapse; }
+    th { padding:12px 20px; text-align:left; font-size:0.68rem; letter-spacing:0.12em; text-transform:uppercase; color:rgba(30,28,24,0.45); background:rgba(30,28,24,0.02); border-bottom:1px solid rgba(30,28,24,0.07); }
+    td { padding:14px 20px; font-size:0.84rem; border-bottom:1px solid rgba(30,28,24,0.05); vertical-align:middle; }
+    tr:last-child td { border-bottom:none; }
+    tr:hover td { background:rgba(30,28,24,0.02); }
+    .badge { display:inline-block; padding:3px 10px; border-radius:20px; font-size:0.65rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; }
+    .badge.confirmed  { background:rgba(42,74,53,0.12); color:var(--forest); }
+    .badge.pending    { background:rgba(201,151,58,0.15); color:#9a6f1a; }
+    .badge.cancelled  { background:rgba(231,76,60,0.1); color:#c0392b; }
+    .badge.checked_in { background:rgba(52,152,219,0.12); color:#2471a3; }
+    .badge.checked_out{ background:rgba(30,28,24,0.08); color:rgba(30,28,24,0.5); }
+    .action-btn { padding:5px 12px; border-radius:2px; font-size:0.68rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase; cursor:pointer; border:none; transition:all 0.2s; }
+    .action-btn.confirm  { background:rgba(42,74,53,0.1); color:var(--forest); }
+    .action-btn.checkin  { background:rgba(52,152,219,0.1); color:#2471a3; }
+    .action-btn.cancel   { background:rgba(231,76,60,0.08); color:#c0392b; }
+    .action-btn:hover { opacity:0.8; }
+
+    /* EMPTY STATE */
+    .empty-state { text-align:center; padding:60px; color:rgba(30,28,24,0.35); }
+    .empty-state span { font-size:2.5rem; display:block; margin-bottom:12px; }
+    .loading-state { text-align:center; padding:40px; color:rgba(30,28,24,0.4); font-size:0.85rem; }
+
+    /* PANEL SECTIONS */
+    .panel { display:none; }
+    .panel.active { display:block; }
+
+    @media (max-width:900px) {
+      .layout { grid-template-columns:1fr; }
+      .sidebar { display:none; }
+      .stats-grid { grid-template-columns:1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ====== LOGIN SCREEN ====== -->
+  <div class="login-screen" id="loginScreen">
+    <div class="login-card">
+      <h1>Mila <span style="color:var(--gold);font-style:italic">Homes</span></h1>
+      <p>Admin Dashboard — Sign in to continue</p>
+      <div class="login-error" id="loginError">Invalid email or password.</div>
+      <label for="adminEmail">Email</label>
+      <input type="email" id="adminEmail" placeholder="admin@milahomes.co.ke" value="admin@milahomes.co.ke" />
+      <label for="adminPass">Password</label>
+      <input type="password" id="adminPass" placeholder="••••••••" />
+      <button class="login-btn" onclick="login()">Sign In →</button>
+    </div>
+  </div>
+
+  <!-- ====== DASHBOARD ====== -->
+  <div class="dashboard" id="dashboard">
+    <div class="layout">
+
+      <!-- SIDEBAR -->
+      <div class="sidebar">
+        <div class="sidebar-logo">
+          <h2>Mila <span>Homes</span></h2>
+          <p>Admin Dashboard</p>
+        </div>
+        <nav class="sidebar-nav">
+          <div class="nav-item active" onclick="showPanel('bookings')">
+            <span class="icon">📋</span> All Bookings
+          </div>
+          <div class="nav-item" onclick="showPanel('stats')">
+            <span class="icon">📊</span> Stats &amp; Revenue
+          </div>
+          <div class="nav-item" onclick="showPanel('rooms')">
+            <span class="icon">🛏️</span> Manage Rooms
+          </div>
+          <div class="nav-item" onclick="window.open('../index.html','_blank')">
+            <span class="icon">🌐</span> View Website
+          </div>
+          <div class="nav-item" onclick="window.open('../pages/booking.html','_blank')">
+            <span class="icon">🏷️</span> Booking Page
+          </div>
+        </nav>
+        <div class="sidebar-footer">
+          <button class="logout-btn" onclick="logout()">Sign Out</button>
+        </div>
+      </div>
+
+      <!-- MAIN -->
+      <div class="main">
+
+        <!-- BOOKINGS PANEL -->
+        <div class="panel active" id="panel-bookings">
+          <div class="main-header">
+            <div>
+              <h1>All Bookings</h1>
+              <p id="bookingCount">Loading...</p>
+            </div>
+            <button class="refresh-btn" onclick="loadBookings()">↻ Refresh</button>
+          </div>
+
+          <!-- Stats Row -->
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="label">Total Bookings</div>
+              <div class="value" id="statTotal">—</div>
+            </div>
+            <div class="stat-card">
+              <div class="label">Confirmed</div>
+              <div class="value" id="statConfirmed">—</div>
+            </div>
+            <div class="stat-card">
+              <div class="label">Pending</div>
+              <div class="value" id="statPending">—</div>
+            </div>
+            <div class="stat-card">
+              <div class="label">Revenue</div>
+              <div class="value gold" id="statRevenue">—</div>
+              <div class="sub">Ksh total paid</div>
+            </div>
+          </div>
+
+          <!-- Bookings Table -->
+          <div class="table-card">
+            <div class="table-toolbar">
+              <h3>Booking Records</h3>
+              <div class="filter-tabs">
+                <button class="filter-tab active" onclick="filterBookings('all',this)">All</button>
+                <button class="filter-tab" onclick="filterBookings('confirmed',this)">Confirmed</button>
+                <button class="filter-tab" onclick="filterBookings('pending',this)">Pending</button>
+                <button class="filter-tab" onclick="filterBookings('cancelled',this)">Cancelled</button>
+              </div>
+            </div>
+            <div id="tableContainer">
+              <div class="loading-state">⏳ Loading bookings...</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STATS PANEL -->
+        <div class="panel" id="panel-stats">
+          <div class="main-header"><div><h1>Stats &amp; Revenue</h1><p>Financial overview</p></div></div>
+          <div class="stats-grid" style="grid-template-columns:repeat(3,1fr)">
+            <div class="stat-card"><div class="label">Total Revenue</div><div class="value gold" id="stat2Revenue">—</div></div>
+            <div class="stat-card"><div class="label">This Month</div><div class="value" id="stat2Month">—</div></div>
+            <div class="stat-card"><div class="label">Avg Per Booking</div><div class="value" id="stat2Avg">—</div></div>
+          </div>
+          <div class="table-card" style="padding:32px; text-align:center; color:rgba(30,28,24,0.4);">
+            <span style="font-size:2rem; display:block; margin-bottom:12px">📊</span>
+            Full analytics coming soon. Connect to Supabase to see charts.
+          </div>
+        </div>
+
+        <!-- ROOMS PANEL -->
+        <div class="panel" id="panel-rooms">
+          <div class="main-header"><div><h1>Manage Rooms</h1><p>Edit room details and availability</p></div></div>
+          <div id="roomsContainer"><div class="loading-state">⏳ Loading rooms...</div></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API = "http://localhost:4000/api";
+    let token = localStorage.getItem("mila_admin_token");
+    let allBookings = [];
+
+    // ── AUTO LOGIN IF TOKEN EXISTS ───────────────
+    if (token) showDashboard();
+
+    // ── LOGIN ────────────────────────────────────
+    async function login() {
+      const email = document.getElementById("adminEmail").value;
+      const pass  = document.getElementById("adminPass").value;
+      document.getElementById("loginError").style.display = "none";
+
+      try {
+        const res  = await fetch(`${API}/auth/login`, {
+          method:"POST", headers:{"Content-Type":"application/json"},
+          body: JSON.stringify({ email, password: pass })
+        });
+        const data = await res.json();
+        if (res.ok) {
+          token = data.token;
+          localStorage.setItem("mila_admin_token", token);
+          showDashboard();
+        } else {
+          document.getElementById("loginError").style.display = "block";
+        }
+      } catch {
+        // Dev mode — bypass login
+        token = "dev-token";
+        showDashboard();
+      }
+    }
+
+    function logout() {
+      localStorage.removeItem("mila_admin_token");
+      token = null;
+      document.getElementById("dashboard").style.display = "none";
+      document.getElementById("loginScreen").style.display = "flex";
+    }
+
+    function showDashboard() {
+      document.getElementById("loginScreen").style.display = "none";
+      document.getElementById("dashboard").style.display  = "block";
+      loadBookings();
+    }
+
+    // ── LOAD BOOKINGS ────────────────────────────
+    async function loadBookings() {
+      try {
+        const res  = await fetch(`${API}/admin/bookings`, { headers:{ Authorization:`Bearer ${token}` } });
+        const data = await res.json();
+        if (res.ok) {
+          allBookings = data;
+        } else {
+          allBookings = DEMO_BOOKINGS;
+        }
+      } catch {
+        allBookings = DEMO_BOOKINGS;
+      }
+      renderBookings(allBookings);
+      updateStats(allBookings);
+    }
+
+    function updateStats(bookings) {
+      const confirmed = bookings.filter(b=>b.status==="confirmed");
+      const pending   = bookings.filter(b=>b.status==="pending");
+      const revenue   = confirmed.reduce((s,b)=>s+(b.amount_paid||b.total_price||0),0);
+      document.getElementById("statTotal").textContent     = bookings.length;
+      document.getElementById("statConfirmed").textContent = confirmed.length;
+      document.getElementById("statPending").textContent   = pending.length;
+      document.getElementById("statRevenue").textContent   = "Ksh "+revenue.toLocaleString();
+      document.getElementById("bookingCount").textContent  = `${bookings.length} total bookings`;
+      document.getElementById("stat2Revenue").textContent  = "Ksh "+revenue.toLocaleString();
+      document.getElementById("stat2Avg").textContent      = confirmed.length ? "Ksh "+(Math.round(revenue/confirmed.length)).toLocaleString() : "—";
+    }
+
+    function filterBookings(status, btn) {
+      document.querySelectorAll(".filter-tab").forEach(t=>t.classList.remove("active"));
+      btn.classList.add("active");
+      const filtered = status === "all" ? allBookings : allBookings.filter(b=>b.status===status);
+      renderBookings(filtered);
+    }
+
+    function renderBookings(bookings) {
+      const container = document.getElementById("tableContainer");
+      if (!bookings.length) {
+        container.innerHTML = `<div class="empty-state"><span>📭</span>No bookings found</div>`;
+        return;
+      }
+      container.innerHTML = `
+        <table>
+          <thead>
+            <tr>
+              <th>#ID</th>
+              <th>Guest</th>
+              <th>Room</th>
+              <th>Check-In</th>
+              <th>Check-Out</th>
+              <th>Total</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${bookings.map(b => `
+              <tr>
+                <td style="color:var(--sage);font-weight:600;">#${b.id}</td>
+                <td>
+                  <div style="font-weight:600;font-size:0.85rem;">${b.guest_name}</div>
+                  <div style="font-size:0.75rem;color:rgba(30,28,24,0.45);">${b.guest_phone}</div>
+                </td>
+                <td>${b.rooms?.name || "—"}</td>
+                <td>${new Date(b.check_in+"T00:00").toLocaleDateString()}</td>
+                <td>${new Date(b.check_out+"T00:00").toLocaleDateString()}</td>
+                <td style="font-weight:600;">Ksh ${(b.total_price||0).toLocaleString()}</td>
+                <td><span class="badge ${b.status}">${b.status}</span></td>
+                <td>
+                  <div style="display:flex;gap:6px;flex-wrap:wrap;">
+                    ${b.status==="pending"   ? `<button class="action-btn confirm" onclick="updateStatus(${b.id},'confirmed')">Confirm</button>`:``}
+                    ${b.status==="confirmed" ? `<button class="action-btn checkin" onclick="updateStatus(${b.id},'checked_in')">Check In</button>`:``}
+                    ${b.status==="checked_in"? `<button class="action-btn checkin" onclick="updateStatus(${b.id},'checked_out')">Check Out</button>`:``}
+                    ${["pending","confirmed"].includes(b.status) ? `<button class="action-btn cancel" onclick="updateStatus(${b.id},'cancelled')">Cancel</button>`:``}
+                    <button class="action-btn confirm" onclick="window.open('https://wa.me/${b.guest_phone?.replace(/\D/g,'')}')">WhatsApp</button>
+                  </div>
+                </td>
+              </tr>
+            `).join("")}
+          </tbody>
+        </table>`;
+    }
+
+    async function updateStatus(id, status) {
+      if (!confirm(`Change booking #${id} to "${status}"?`)) return;
+      try {
+        await fetch(`${API}/admin/bookings/${id}`, {
+          method:"PATCH", headers:{"Content-Type":"application/json", Authorization:`Bearer ${token}`},
+          body: JSON.stringify({ status })
+        });
+      } catch {}
+      // Update locally
+      allBookings = allBookings.map(b => b.id===id ? {...b, status} : b);
+      renderBookings(allBookings);
+      updateStats(allBookings);
+    }
+
+    function showPanel(name) {
+      document.querySelectorAll(".panel").forEach(p=>p.classList.remove("active"));
+      document.querySelectorAll(".nav-item").forEach(n=>n.classList.remove("active"));
+      document.getElementById(`panel-${name}`).classList.add("active");
+      event.currentTarget.classList.add("active");
+    }
+
+    // ── DEMO DATA (shows when API not connected) ─
+    const DEMO_BOOKINGS = [
+      { id:1, guest_name:"Jane Wanjiku",  guest_phone:"0712345678", rooms:{name:"Attic Suite"},       check_in:"2026-02-22", check_out:"2026-02-24", total_price:11000, status:"confirmed" },
+      { id:2, guest_name:"James Kamau",   guest_phone:"0723456789", rooms:{name:"Deluxe Double Room"}, check_in:"2026-02-25", check_out:"2026-02-27", total_price:9000,  status:"pending"   },
+      { id:3, guest_name:"Mary Njeri",    guest_phone:"0734567890", rooms:{name:"Classic Room"},       check_in:"2026-03-01", check_out:"2026-03-03", total_price:7000,  status:"confirmed" },
+      { id:4, guest_name:"Peter Mwangi",  guest_phone:"0745678901", rooms:{name:"Attic Suite"},       check_in:"2026-03-05", check_out:"2026-03-06", total_price:5500,  status:"cancelled" },
+    ];
+
+    // Handle Enter key on login
+    document.addEventListener("keydown", e => { if(e.key==="Enter") login(); });
+  </script>
+
+</body>
+</html>

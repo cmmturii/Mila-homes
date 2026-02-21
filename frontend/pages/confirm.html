@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Booking Confirmed — Mila Homes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root { --forest:#2a4a35; --gold:#c9973a; --cream:#f7f3ec; }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:"DM Sans",sans-serif; background:var(--cream); min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:24px; }
+    .card { background:white; border-radius:6px; max-width:520px; width:100%; overflow:hidden; box-shadow:0 8px 40px rgba(30,28,24,0.12); }
+    .card-header { background:var(--forest); padding:40px; text-align:center; }
+    .check { font-size:3.5rem; margin-bottom:14px; }
+    .card-header h1 { font-family:"Playfair Display",serif; color:white; font-size:1.6rem; margin-bottom:6px; }
+    .card-header p { color:rgba(255,255,255,0.65); font-size:0.85rem; }
+    .card-body { padding:32px; }
+    .detail-row { display:flex; justify-content:space-between; padding:10px 0; border-bottom:1px solid rgba(30,28,24,0.07); font-size:0.88rem; }
+    .detail-row:last-of-type { border-bottom:none; }
+    .detail-row span { color:rgba(30,28,24,0.5); }
+    .detail-row strong { color:#1e1c18; }
+    .total-row { display:flex; justify-content:space-between; align-items:center; margin-top:16px; padding-top:16px; border-top:2px solid var(--gold); }
+    .total-row span { font-weight:600; color:var(--forest); }
+    .total-row strong { font-family:"Playfair Display",serif; font-size:1.6rem; color:var(--gold); }
+    .actions { padding:0 32px 32px; display:flex; flex-direction:column; gap:10px; }
+    .btn { display:flex; align-items:center; justify-content:center; gap:8px; padding:13px; border-radius:3px; font-size:0.8rem; font-weight:600; letter-spacing:0.1em; text-transform:uppercase; text-decoration:none; cursor:pointer; border:none; transition:all 0.2s; }
+    .btn-primary { background:var(--forest); color:white; }
+    .btn-primary:hover { background:var(--gold); color:#1e1c18; }
+    .btn-whatsapp { background:#25D366; color:white; }
+    .btn-outline { background:none; border:1.5px solid rgba(30,28,24,0.15); color:#1e1c18; }
+    .btn-outline:hover { border-color:var(--forest); color:var(--forest); }
+    .receipt-badge { background:rgba(42,74,53,0.08); border:1px solid rgba(42,74,53,0.15); border-radius:3px; padding:12px; text-align:center; margin-bottom:20px; }
+    .receipt-badge p { font-size:0.72rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--forest); margin-bottom:4px; }
+    .receipt-badge strong { font-size:1.1rem; color:var(--forest); letter-spacing:0.06em; }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <div class="card-header">
+      <div class="check">✅</div>
+      <h1>Booking Confirmed!</h1>
+      <p>Thank you for choosing Mila Homes, Nyeri</p>
+    </div>
+
+    <div class="card-body">
+      <div class="receipt-badge">
+        <p>M-Pesa Receipt</p>
+        <strong id="receiptNum">—</strong>
+      </div>
+
+      <div class="detail-row"><span>Booking ID</span><strong id="detBookingId">—</strong></div>
+      <div class="detail-row"><span>Guest Name</span><strong id="detName">—</strong></div>
+      <div class="detail-row"><span>Room</span><strong id="detRoom">—</strong></div>
+      <div class="detail-row"><span>Check-In</span><strong id="detCheckin">—</strong></div>
+      <div class="detail-row"><span>Check-Out</span><strong id="detCheckout">—</strong></div>
+      <div class="detail-row"><span>Nights</span><strong id="detNights">—</strong></div>
+      <div class="detail-row"><span>Guests</span><strong id="detGuests">—</strong></div>
+      <div class="total-row">
+        <span>Total Paid</span>
+        <strong id="detTotal">Ksh —</strong>
+      </div>
+    </div>
+
+    <div class="actions">
+      <a href="https://wa.me/254713151177?text=Hi!%20I%20just%20booked%20at%20Mila%20Homes.%20My%20booking%20ID%20is%20" class="btn btn-whatsapp" target="_blank">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Message Us on WhatsApp
+      </a>
+      <button onclick="window.print()" class="btn btn-outline">🖨️ Print Receipt</button>
+      <a href="../index.html" class="btn btn-outline">← Back to Mila Homes</a>
+    </div>
+  </div>
+
+  <script>
+    const API = "http://localhost:4000/api";
+    const params = new URLSearchParams(window.location.search);
+    const bookingId = params.get("booking");
+    const receipt   = params.get("receipt");
+
+    document.getElementById("receiptNum").textContent = receipt || "DEV-TEST";
+    document.getElementById("detBookingId").textContent = "#" + (bookingId || "—");
+
+    // Load booking details from API
+    if (bookingId && !bookingId.startsWith("DEV")) {
+      fetch(`${API}/bookings/${bookingId}`)
+        .then(r => r.json())
+        .then(b => {
+          document.getElementById("detName").textContent     = b.guest_name;
+          document.getElementById("detRoom").textContent     = b.rooms?.name || "—";
+          document.getElementById("detCheckin").textContent  = new Date(b.check_in+"T00:00").toDateString();
+          document.getElementById("detCheckout").textContent = new Date(b.check_out+"T00:00").toDateString();
+          document.getElementById("detNights").textContent   = b.nights + " nights";
+          document.getElementById("detGuests").textContent   = b.guests + " guests";
+          document.getElementById("detTotal").textContent    = "Ksh " + (b.amount_paid||b.total_price||0).toLocaleString();
+        }).catch(() => {});
+    }
+  </script>
+
+</body>
+</html>

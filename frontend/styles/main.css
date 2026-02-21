@@ -1,0 +1,1080 @@
+/* =============================================
+   MILA HOMES — styles.css
+   Boutique B&B, Nyeri Kenya
+   =============================================
+
+   TABLE OF CONTENTS
+   1.  CSS Variables
+   2.  Reset & Base
+   3.  Navigation
+   4.  Hero
+   5.  Stats Bar
+   6.  Gallery
+   7.  Rooms
+   8.  Specials
+   9.  Amenities
+   10. Booking Form
+   11. Footer
+   12. Lightbox
+   13. Animations
+   14. Responsive (Mobile)
+   ============================================= */
+
+
+/* =============================================
+   1. CSS VARIABLES
+   ============================================= */
+:root {
+  --cream:      #f7f3ec;
+  --warm:       #faf8f3;
+  --charcoal:   #1e1c18;
+  --forest:     #2a4a35;
+  --sage:       #7a9e8e;
+  --gold:       #c9973a;
+  --rust:       #c4704f;
+  --light-sage: #dde8e2;
+  --shadow:     rgba(30, 28, 24, 0.10);
+}
+
+
+/* =============================================
+   2. RESET & BASE
+   ============================================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "DM Sans", sans-serif;
+  background: var(--warm);
+  color: var(--charcoal);
+  overflow-x: hidden;
+}
+
+img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+
+/* =============================================
+   3. NAVIGATION
+   ============================================= */
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 200;
+  padding: 18px 56px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(250, 248, 243, 0.96);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(30, 28, 24, 0.08);
+  transition: padding 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Logo */
+.logo {
+  font-family: "Playfair Display", serif;
+  font-size: 1.6rem;
+  color: var(--forest);
+  letter-spacing: 0.02em;
+}
+.logo span {
+  color: var(--gold);
+  font-style: italic;
+}
+
+/* Desktop nav links */
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+
+nav ul a {
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--charcoal);
+  opacity: 0.65;
+  transition: opacity 0.2s;
+}
+nav ul a:hover {
+  opacity: 1;
+}
+
+/* Book Now button in nav */
+.nav-cta {
+  background: var(--forest) !important;
+  color: white !important;
+  opacity: 1 !important;
+  padding: 10px 22px;
+  border-radius: 2px;
+  transition: background 0.2s !important;
+}
+.nav-cta:hover {
+  background: var(--gold) !important;
+}
+
+/* Hamburger (mobile only) */
+.hamburger {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: var(--forest);
+  cursor: pointer;
+}
+
+/* Mobile menu */
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 70px;
+  left: 0;
+  right: 0;
+  background: white;
+  z-index: 190;
+  flex-direction: column;
+  padding: 16px 24px;
+  gap: 4px;
+  box-shadow: 0 8px 24px var(--shadow);
+  border-bottom: 1px solid rgba(30, 28, 24, 0.08);
+}
+.mobile-menu.open {
+  display: flex;
+}
+.mobile-menu a {
+  padding: 12px 0;
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--charcoal);
+  border-bottom: 1px solid rgba(30, 28, 24, 0.06);
+}
+.mobile-menu a:last-child {
+  color: var(--forest);
+  font-weight: 600;
+  border-bottom: none;
+}
+
+
+/* =============================================
+   4. HERO
+   ============================================= */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 58% 42%;
+  padding-top: 70px;
+}
+
+/* Left — big image */
+.hero-left {
+  position: relative;
+  overflow: hidden;
+}
+.hero-left img {
+  transition: transform 8s ease;
+}
+.hero-left:hover img {
+  transform: scale(1.04);
+}
+
+/* Dark gradient over hero image */
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(30, 28, 24, 0.60) 0%,
+    rgba(42, 74, 53, 0.35) 55%,
+    transparent 100%
+  );
+}
+
+/* Text over hero image */
+.hero-text {
+  position: absolute;
+  bottom: 60px;
+  left: 52px;
+  right: 52px;
+}
+
+.hero-tag {
+  font-size: 0.68rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+
+.hero-title {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(2.8rem, 4.5vw, 4.8rem);
+  line-height: 1.06;
+  color: white;
+  margin-bottom: 18px;
+}
+.hero-title em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.hero-sub {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.15rem;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.78);
+  line-height: 1.65;
+  margin-bottom: 34px;
+  max-width: 440px;
+}
+
+.hero-btns {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+/* Buttons */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--gold);
+  color: var(--charcoal);
+  padding: 14px 32px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  transition: background 0.3s, transform 0.3s;
+}
+.btn-primary:hover {
+  background: white;
+  transform: translateY(-2px);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  color: white;
+  padding: 14px 28px;
+  font-size: 0.76rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  transition: all 0.3s;
+  backdrop-filter: blur(4px);
+}
+.btn-outline:hover {
+  border-color: white;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* Right — two stacked thumbnails */
+.hero-right {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 3px;
+  background: var(--charcoal);
+}
+
+.hero-thumb {
+  position: relative;
+  overflow: hidden;
+}
+.hero-thumb img {
+  transition: transform 0.5s ease;
+}
+.hero-thumb:hover img {
+  transform: scale(1.06);
+}
+
+/* Small label on images */
+.img-label {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  background: rgba(30, 28, 24, 0.72);
+  color: white;
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 5px 10px;
+  border-radius: 2px;
+  backdrop-filter: blur(4px);
+}
+
+
+/* =============================================
+   5. STATS BAR
+   ============================================= */
+.stats-bar {
+  background: var(--forest);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  padding: 28px 60px;
+}
+
+.stat-item {
+  text-align: center;
+  padding: 8px 0;
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+.stat-item:last-child {
+  border-right: none;
+}
+
+.stat-num {
+  font-family: "Playfair Display", serif;
+  font-size: 2rem;
+  color: var(--gold);
+}
+.stat-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  margin-top: 4px;
+}
+
+
+/* =============================================
+   SHARED SECTION STYLES
+   ============================================= */
+.section-tag {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--sage);
+  margin-bottom: 10px;
+}
+
+.section-title {
+  font-family: "Playfair Display", serif;
+  font-size: clamp(1.9rem, 3vw, 2.9rem);
+  line-height: 1.15;
+  color: var(--forest);
+  margin-bottom: 48px;
+}
+.section-title em {
+  font-style: italic;
+  color: var(--rust);
+}
+
+
+/* =============================================
+   6. GALLERY
+   ============================================= */
+.gallery {
+  padding: 90px 56px;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+
+.gal-item {
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  border-radius: 2px;
+}
+
+/* Normal height */
+.gal-item img {
+  height: 220px;
+  transition: transform 0.5s ease;
+}
+.gal-item:hover img {
+  transform: scale(1.07);
+}
+
+/* Tall item spans 2 rows */
+.gal-item.tall img {
+  height: 446px;
+}
+
+/* Wide item spans 2 columns */
+.gal-item.wide {
+  grid-column: span 2;
+}
+.gal-item.wide img {
+  height: 220px;
+}
+
+/* Label shown on hover */
+.gal-label {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(30, 28, 24, 0.78));
+  color: white;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 24px 14px 10px;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+.gal-item:hover .gal-label {
+  transform: translateY(0);
+}
+
+
+/* =============================================
+   7. ROOMS
+   ============================================= */
+.rooms {
+  padding: 90px 56px;
+  background: var(--cream);
+}
+
+.rooms-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.room-card {
+  background: white;
+  border-radius: 3px;
+  overflow: hidden;
+  border: 1px solid rgba(30, 28, 24, 0.07);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.room-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px var(--shadow);
+}
+
+.room-img {
+  position: relative;
+  overflow: hidden;
+  height: 240px;
+}
+.room-img img {
+  transition: transform 0.5s ease;
+}
+.room-card:hover .room-img img {
+  transform: scale(1.05);
+}
+
+.room-badge {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: var(--gold);
+  color: white;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 5px 11px;
+  border-radius: 2px;
+}
+
+.room-info {
+  padding: 24px;
+}
+
+.room-name {
+  font-family: "Playfair Display", serif;
+  font-size: 1.25rem;
+  color: var(--forest);
+  margin-bottom: 8px;
+}
+
+.room-desc {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1rem;
+  color: rgba(30, 28, 24, 0.6);
+  line-height: 1.65;
+  margin-bottom: 18px;
+}
+
+.room-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 16px;
+  border-top: 1px solid rgba(30, 28, 24, 0.08);
+}
+
+.room-price {
+  font-family: "Playfair Display", serif;
+  font-size: 1.3rem;
+  color: var(--forest);
+}
+.room-price span {
+  font-size: 0.75rem;
+  font-family: "DM Sans", sans-serif;
+  color: rgba(30, 28, 24, 0.45);
+}
+
+.room-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.tag {
+  background: var(--light-sage);
+  color: var(--forest);
+  font-size: 0.62rem;
+  padding: 4px 10px;
+  border-radius: 20px;
+  letter-spacing: 0.06em;
+}
+
+/* ── ROOM BOOK BUTTON (FIXED) ── */
+.room-book-btn {
+  display: block;
+  width: 100%;
+  margin-top: 16px;
+  padding: 11px;
+  background: var(--forest);
+  color: white;
+  text-align: center;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  transition: background 0.2s, transform 0.2s;
+  text-decoration: none;
+}
+.room-book-btn:hover {
+  background: var(--gold);
+  color: var(--charcoal);
+  transform: translateY(-1px);
+}
+
+
+/* =============================================
+   8. SPECIALS
+   ============================================= */
+.specials {
+  padding: 90px 56px;
+  background: var(--forest);
+}
+
+.specials .section-tag  { color: var(--gold); }
+.specials .section-title { color: var(--cream); }
+.specials .section-title em { color: var(--gold); }
+
+.specials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.special-card {
+  border: 1px solid rgba(245, 240, 232, 0.12);
+  border-radius: 3px;
+  overflow: hidden;
+  transition: border-color 0.3s, transform 0.3s;
+}
+.special-card:hover {
+  border-color: var(--gold);
+  transform: translateY(-5px);
+}
+
+.special-img {
+  height: 210px;
+  overflow: hidden;
+}
+.special-img img {
+  transition: transform 0.5s ease;
+}
+.special-card:hover .special-img img {
+  transform: scale(1.06);
+}
+
+.special-body {
+  padding: 26px;
+}
+.special-icon {
+  font-size: 1.8rem;
+  margin-bottom: 12px;
+}
+.special-name {
+  font-family: "Playfair Display", serif;
+  font-size: 1.1rem;
+  color: var(--cream);
+  margin-bottom: 8px;
+}
+.special-desc {
+  font-size: 0.86rem;
+  color: rgba(245, 240, 232, 0.55);
+  line-height: 1.65;
+  margin-bottom: 16px;
+}
+
+/* CTA tag inside specials */
+.special-tag {
+  display: inline-block;
+  background: rgba(201, 151, 58, 0.15);
+  color: var(--gold);
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: 2px;
+  border: 1px solid rgba(201, 151, 58, 0.3);
+  transition: background 0.2s;
+}
+.special-tag:hover {
+  background: rgba(201, 151, 58, 0.3);
+}
+
+
+/* =============================================
+   9. AMENITIES
+   ============================================= */
+.amenities {
+  padding: 90px 56px;
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.amen-imgs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 6px;
+  height: 460px;
+}
+
+.amen-img {
+  position: relative;
+  overflow: hidden;
+  border-radius: 2px;
+}
+.amen-img img {
+  transition: transform 0.5s ease;
+}
+.amen-img:hover img {
+  transform: scale(1.06);
+}
+.amen-img.tall {
+  grid-row: span 2;
+}
+.amen-img .img-label {
+  font-size: 0.62rem;
+}
+
+.amen-list {
+  list-style: none;
+  margin-top: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.amen-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 0.9rem;
+  color: rgba(30, 28, 24, 0.75);
+}
+
+.amen-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--gold);
+  flex-shrink: 0;
+}
+
+
+/* =============================================
+   10. BOOKING SECTION
+   ============================================= */
+#booking {
+  padding: 100px 56px;
+  background: var(--cream);
+}
+
+.booking-wrap {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.booking-head {
+  text-align: center;
+  margin-bottom: 52px;
+}
+.booking-head p {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 1.15rem;
+  color: rgba(30, 28, 24, 0.6);
+  font-weight: 300;
+  margin-top: 12px;
+}
+
+/* Booking CTA button */
+.booking-cta-btn {
+  display: inline-block;
+  background: var(--forest);
+  color: white;
+  padding: 1.1rem 3rem;
+  font-family: "DM Sans", sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-radius: 2px;
+  transition: background 0.2s, transform 0.2s;
+}
+.booking-cta-btn:hover {
+  background: var(--gold);
+  color: var(--charcoal);
+  transform: translateY(-2px);
+}
+
+.booking-note {
+  margin-top: 1.2rem;
+  color: #888;
+  font-size: 0.85rem;
+}
+
+
+/* =============================================
+   11. FOOTER
+   ============================================= */
+.footer {
+  background: var(--charcoal);
+  color: rgba(245, 240, 232, 0.65);
+  padding: 80px 56px;
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 60px;
+}
+
+.footer-logo {
+  font-family: "Playfair Display", serif;
+  font-size: 1.7rem;
+  color: var(--cream);
+  margin-bottom: 14px;
+}
+.footer-logo span {
+  color: var(--gold);
+  font-style: italic;
+}
+
+.footer-col p {
+  font-size: 0.88rem;
+  line-height: 1.75;
+}
+
+.footer-col h5 {
+  font-size: 0.68rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 18px;
+}
+
+.footer-col ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.footer-col ul li a {
+  font-size: 0.86rem;
+  color: rgba(245, 240, 232, 0.55);
+  transition: color 0.2s;
+}
+.footer-col ul li a:hover {
+  color: var(--gold);
+}
+
+.footer-contact {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.footer-contact-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.86rem;
+}
+.footer-contact-item span {
+  color: var(--gold);
+}
+.footer-contact-item a {
+  color: rgba(245, 240, 232, 0.55);
+  transition: color 0.2s;
+}
+.footer-contact-item a:hover {
+  color: var(--gold);
+}
+
+.footer-bottom {
+  background: var(--charcoal);
+  border-top: 1px solid rgba(245, 240, 232, 0.07);
+  padding: 18px 56px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: rgba(245, 240, 232, 0.28);
+}
+.footer-bottom a {
+  color: var(--gold);
+}
+
+
+/* =============================================
+   12. LIGHTBOX
+   ============================================= */
+.lightbox {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.93);
+  z-index: 999;
+  align-items: center;
+  justify-content: center;
+}
+.lightbox.open {
+  display: flex;
+}
+.lightbox img {
+  max-width: 88vw;
+  max-height: 85vh;
+  width: auto;
+  height: auto;
+  border-radius: 2px;
+  object-fit: contain;
+}
+.lb-close {
+  position: absolute;
+  top: 22px;
+  right: 28px;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+  background: none;
+  border: none;
+  opacity: 0.7;
+  transition: opacity 0.2s;
+  line-height: 1;
+}
+.lb-close:hover {
+  opacity: 1;
+}
+.lb-cap {
+  position: absolute;
+  bottom: 22px;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+
+/* =============================================
+   13. ANIMATIONS
+   ============================================= */
+
+/* Hero text entrance */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hero-tag   { animation: fadeUp 0.6s 0.10s both; }
+.hero-title { animation: fadeUp 0.7s 0.25s both; }
+.hero-sub   { animation: fadeUp 0.7s 0.40s both; }
+.hero-btns  { animation: fadeUp 0.7s 0.55s both; }
+
+/* Scroll reveal — class added by JS */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* =============================================
+   14. RESPONSIVE — MOBILE
+   ============================================= */
+@media (max-width: 960px) {
+
+  /* Nav */
+  nav { padding: 16px 22px; }
+  nav ul { display: none; }
+  .hamburger { display: block; }
+
+  /* Hero */
+  .hero { grid-template-columns: 1fr; }
+  .hero-right { height: 260px; grid-template-rows: 1fr; }
+  .hero-right > .hero-thumb:last-child { display: none; }
+  .hero-text { bottom: 30px; left: 22px; right: 22px; }
+
+  /* Stats */
+  .stats-bar { grid-template-columns: 1fr 1fr; padding: 20px 22px; }
+
+  /* Gallery */
+  .gallery { padding: 60px 22px; }
+  .gallery-grid { grid-template-columns: 1fr 1fr; }
+  .gal-item.tall img { height: 220px; }
+
+  /* Rooms */
+  .rooms { padding: 60px 22px; }
+  .rooms-grid { grid-template-columns: 1fr; }
+
+  /* Specials */
+  .specials { padding: 60px 22px; }
+  .specials-grid { grid-template-columns: 1fr; }
+
+  /* Amenities */
+  .amenities { padding: 60px 22px; grid-template-columns: 1fr; gap: 40px; }
+  .amen-imgs { height: 300px; }
+
+  /* Booking */
+  #booking { padding: 60px 22px; }
+
+  /* Footer */
+  .footer { grid-template-columns: 1fr; padding: 56px 22px; gap: 40px; }
+  .footer-bottom { flex-direction: column; gap: 6px; padding: 16px 22px; }
+}
+
+
+/* =============================================
+   SOCIAL ICONS — NAV
+   ============================================= */
+.nav-socials {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.social-icon {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s, opacity 0.2s;
+}
+.social-icon svg {
+  width: 17px;
+  height: 17px;
+}
+.social-icon:hover {
+  transform: translateY(-2px);
+  opacity: 0.85;
+}
+.social-icon.whatsapp {
+  background: #25D366;
+  color: white;
+}
+.social-icon.facebook {
+  background: #1877F2;
+  color: white;
+}
+
+
+/* =============================================
+   SOCIAL ICONS — FOOTER CONTACT
+   ============================================= */
+.contact-icon {
+  width: 16px;
+  height: 16px;
+  color: var(--gold);
+  flex-shrink: 0;
+}
+
+/* Social Buttons in footer */
+.footer-socials {
+  display: flex;
+  gap: 10px;
+  margin-top: 24px;
+  flex-wrap: wrap;
+}
+
+.social-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  border-radius: 3px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  transition: transform 0.2s, opacity 0.2s;
+  color: white;
+}
+.social-btn svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+.social-btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+.whatsapp-btn  { background: #25D366; }
+.facebook-btn  { background: #1877F2; }
+.maps-btn      { background: #EA4335; }
+
+/* Footer bottom social icons */
+.footer-bottom-socials {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.footer-bottom-socials a {
+  color: rgba(245, 240, 232, 0.45);
+  transition: color 0.2s, transform 0.2s;
+  display: flex;
+  align-items: center;
+}
+.footer-bottom-socials a:hover {
+  color: var(--gold);
+  transform: translateY(-2px);
+}
+
+/* Hide nav socials on mobile */
+@media (max-width: 960px) {
+  .nav-socials { display: none; }
+}
