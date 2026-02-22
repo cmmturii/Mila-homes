@@ -78,7 +78,7 @@ nav {
   top: 0;
   width: 100%;
   z-index: 200;
-  padding: 18px 56px;
+  padding: 9px 12px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -98,6 +98,17 @@ nav {
 .logo span {
   color: var(--gold);
   font-style: italic;
+}
+
+/* Navbar logo image only */
+#navbar .logo {
+  display: flex;
+  align-items: center;
+}
+#navbar .logo img {
+  height: 45px;
+  width: auto;
+  object-fit: contain;
 }
 
 /* Desktop nav links */
@@ -180,7 +191,7 @@ nav ul a:hover {
    4. HERO
    ============================================= */
 .hero {
-  min-height: 100vh;
+  min-height: 50vh;
   display: grid;
   grid-template-columns: 58% 42%;
   padding-top: 70px;
@@ -577,9 +588,10 @@ nav ul a:hover {
 
 .special-card {
   border: 1px solid rgba(245, 240, 232, 0.12);
-  border-radius: 3px;
+  border-radius: 12px;
   overflow: hidden;
   transition: border-color 0.3s, transform 0.3s;
+  background: rgba(255,255,255,0.05);
 }
 .special-card:hover {
   border-color: var(--gold);
@@ -587,7 +599,7 @@ nav ul a:hover {
 }
 
 .special-img {
-  height: 210px;
+  height: 260px;
   overflow: hidden;
 }
 .special-img img {
@@ -1216,4 +1228,9 @@ reveal {
 /* Hide nav socials on mobile */
 @media (max-width: 960px) {
   .nav-socials { display: none; }
+}
+#navbar .logo img {
+  width: auto !important;
+  height: 60px !important;
+  object-fit: contain !important;
 }

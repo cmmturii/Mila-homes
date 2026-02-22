@@ -6,12 +6,37 @@
   <title>Mila Homes — Boutique B&B, Nyeri Kenya</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:wght@300;400;500&family=DM+Sans:wght@300;400;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles/styles.css" />
+  <style>
+
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    .gal-item { position: relative; overflow: hidden; border-radius: 4px; cursor: pointer; }
+    .gal-item img { width: 100%; height: 220px; object-fit: cover; display: block; transition: transform 0.4s ease; }
+    .gal-item:hover img { transform: scale(1.05); }
+    .gal-item.tall { grid-row: span 2; }
+    .gal-item.tall img { height: 100%; min-height: 450px; }
+    .gal-item.wide { grid-column: span 2; }
+    .gal-item.wide img { height: 220px; }
+    .gal-label { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.65)); color: white; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 20px 12px 10px; opacity: 0; transition: opacity 0.3s; }
+    .gal-item:hover .gal-label { opacity: 1; }
+    @media (max-width: 768px) {
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      .gal-item.tall { grid-row: span 1; }
+      .gal-item.tall img { min-height: 220px; height: 220px; }
+    }
+  </style>
 </head>
 <body>
 
   <!-- NAVIGATION -->
   <nav id="navbar">
-    <div class="logo">Mila <span>Homes</span></div>
+    <div class="logo">
+      <img src="images/logo.png" alt="Mila Homes Logo" />
+    </div>
     <ul>
       <li><a href="#gallery">Gallery</a></li>
       <li><a href="#rooms">Rooms</a></li>
@@ -31,7 +56,7 @@
   <!-- HERO -->
   <section class="hero">
     <div class="hero-left">
-      <img src="images/mila_3.jpg" alt="Mila Homes Night View" />
+      <img src="images/entrance.jpeg" alt="Mila Homes Night View" />
       <div class="hero-overlay"></div>
       <div class="hero-text">
         <p class="hero-tag">✦ Boutique B&B · Nyeri, Kenya</p>
@@ -45,11 +70,11 @@
     </div>
     <div class="hero-right">
       <div class="hero-thumb">
-        <img src="images/mila_1.jpg" alt="Mila Homes Exterior" />
+        <img src="images/lounge area.jpeg" alt="Mila Homes Grand Lounge" />
         <span class="img-label">🏡 Main Building</span>
       </div>
       <div class="hero-thumb">
-        <img src="images/mila_5.jpg" alt="Mila Homes Entrance" />
+        <img src="images/porch.jpeg" alt="Mila Homes Porch" />
         <span class="img-label">🌙 Evening Entrance</span>
       </div>
     </div>
@@ -68,15 +93,26 @@
     <p class="section-tag">✦ Photo Gallery</p>
     <h2 class="section-title">See Mila Homes <em>Up Close</em></h2>
     <div class="gallery-grid">
-      <div class="gal-item tall" data-label="Grand High-Ceiling Lounge"><img src="images/mila_14.jpg" alt="Grand Lounge" /><div class="gal-label">Grand High-Ceiling Lounge</div></div>
-      <div class="gal-item" data-label="Lounge & Living Area"><img src="images/mila_13.jpg" alt="Lounge Living Area" /><div class="gal-label">Lounge &amp; Living Area</div></div>
-      <div class="gal-item" data-label="Lounge with Artwork"><img src="images/mila_17.jpg" alt="Lounge Artwork" /><div class="gal-label">Lounge with Artwork</div></div>
-      <div class="gal-item" data-label="Upper Floor View"><img src="images/mila_10.jpg" alt="Upper Floor" /><div class="gal-label">Upper Floor View</div></div>
-      <div class="gal-item" data-label="Mezzanine Level"><img src="images/mila_18.jpg" alt="Mezzanine" /><div class="gal-label">Mezzanine Level</div></div>
-      <div class="gal-item wide" data-label="Lounge Seating"><img src="images/mila_20.jpg" alt="Lounge Seating" /><div class="gal-label">Lounge — Seating Area</div></div>
-      <div class="gal-item" data-label="Decorative Chandelier"><img src="images/mila_19.jpg" alt="Chandelier" /><div class="gal-label">Decorative Chandelier</div></div>
-      <div class="gal-item" data-label="Staircase"><img src="images/mila_21.jpg" alt="Staircase" /><div class="gal-label">Staircase</div></div>
-      <div class="gal-item" data-label="Garden & Grounds"><img src="images/mila_9.jpg" alt="Garden" /><div class="gal-label">Garden &amp; Grounds</div></div>
+      <div class="gal-item tall"><img src="images/lounge area.jpeg" alt="Grand Lounge" /><div class="gal-label">Grand High-Ceiling Lounge</div></div>
+      <div class="gal-item"><img src="images/sitting area 3.jpeg" alt="Sitting Area" /><div class="gal-label">Sitting Area</div></div>
+      <div class="gal-item"><img src="images/sitting area 4.jpeg" alt="Lounge Artwork" /><div class="gal-label">Lounge with Artwork</div></div>
+      <div class="gal-item"><img src="images/porch.jpeg" alt="Porch" /><div class="gal-label">Porch &amp; Entrance</div></div>
+      <div class="gal-item"><img src="images/sitting area 5.jpeg" alt="Lounge View" /><div class="gal-label">Lounge View</div></div>
+      <div class="gal-item"><img src="images/porche 2.jpeg" alt="Evening Porch" /><div class="gal-label">Evening Porch</div></div>
+      <div class="gal-item"><img src="images/porch 3.jpeg" alt="Night Exterior" /><div class="gal-label">Night Exterior</div></div>
+      <div class="gal-item wide"><img src="images/sitting area 6.jpeg" alt="Lounge Seating" /><div class="gal-label">Lounge — Seating Area</div></div>
+      <div class="gal-item"><img src="images/sitting area 7.jpeg" alt="Cosy Corner" /><div class="gal-label">Cosy Corner</div></div>
+      <div class="gal-item"><img src="images/sitting area 8.jpeg" alt="Relaxing Space" /><div class="gal-label">Relaxing Space</div></div>
+      <div class="gal-item"><img src="images/chandelier.jpeg" alt="Chandelier" /><div class="gal-label">Decorative Chandelier</div></div>
+      <div class="gal-item"><img src="images/ceiling.jpeg" alt="Ceiling" /><div class="gal-label">Ceiling Detail</div></div>
+      <div class="gal-item"><img src="images/ceiling 2.jpeg" alt="Ceiling Beams" /><div class="gal-label">Ceiling Beams</div></div>
+      <div class="gal-item"><img src="images/ceilin 3.jpeg" alt="Attic Ceiling" /><div class="gal-label">Attic Ceiling</div></div>
+      <div class="gal-item"><img src="images/stairs.jpeg" alt="Staircase" /><div class="gal-label">Staircase</div></div>
+      <div class="gal-item"><img src="images/stairs 2.jpeg" alt="Staircase View" /><div class="gal-label">Staircase View</div></div>
+      <div class="gal-item"><img src="images/attic area.jpeg" alt="Attic Area" /><div class="gal-label">Attic Area</div></div>
+      <div class="gal-item"><img src="images/attic ii 3.jpeg" alt="Attic Suite" /><div class="gal-label">Attic Suite</div></div>
+      <div class="gal-item wide"><img src="images/portrait.jpeg" alt="Kenyan Artwork" /><div class="gal-label">Original Kenyan Artwork</div></div>
+      <div class="gal-item wide"><img src="images/portrait 2.jpeg" alt="Gallery Wall" /><div class="gal-label">Gallery Wall</div></div>
     </div>
   </section>
 
@@ -84,8 +120,6 @@
   <section class="rooms" id="rooms">
     <p class="section-tag">✦ Accommodation</p>
     <h2 class="section-title">Our <em>Rooms</em></h2>
-
-    <!-- WHOLE HOUSE BANNER -->
     <div style="background:var(--forest);color:white;padding:24px 32px;border-radius:3px;margin-bottom:32px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;">
       <div>
         <div style="font-size:0.7rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--gold);margin-bottom:6px;">✦ Exclusive Offer</div>
@@ -98,14 +132,9 @@
         <a href="pages/booking.html" style="display:inline-block;margin-top:10px;background:var(--gold);color:var(--charcoal);padding:8px 20px;font-size:0.75rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;border-radius:2px;text-decoration:none;">Enquire Now →</a>
       </div>
     </div>
-
     <div class="rooms-grid" style="grid-template-columns:repeat(2,1fr);">
-
       <div class="room-card reveal">
-        <div class="room-img">
-          <img src="images/uj.jpeg" alt="The Attic Suite 1" />
-          <div class="room-badge">Attic Room</div>
-        </div>
+        <div class="room-img"><img src="images/uj.jpeg" alt="The Attic Suite 1" /><div class="room-badge">Attic Room</div></div>
         <div class="room-info">
           <h3 class="room-name">The Attic Suite I</h3>
           <p class="room-desc">Soaring timber beams, warm wooden floors, and an intimate atmosphere. A charming top-floor retreat full of character.</p>
@@ -116,12 +145,8 @@
           <a href="pages/booking.html" class="room-book-btn">Book This Room →</a>
         </div>
       </div>
-
       <div class="room-card reveal">
-        <div class="room-img">
-          <img src="images/uj2.jpeg" alt="The Attic Suite 2" />
-          <div class="room-badge">Attic Room</div>
-        </div>
+        <div class="room-img"><img src="images/uj2.jpeg" alt="The Attic Suite 2" /><div class="room-badge">Attic Room</div></div>
         <div class="room-info">
           <h3 class="room-name">The Attic Suite II</h3>
           <p class="room-desc">Beautiful wooden headboard, original artwork, and a bright en-suite bathroom. A cosy attic escape with a personal touch.</p>
@@ -132,12 +157,8 @@
           <a href="pages/booking.html" class="room-book-btn">Book This Room →</a>
         </div>
       </div>
-
       <div class="room-card reveal">
-        <div class="room-img">
-          <img src="images/mila_11_room_2.jpg" alt="Deluxe Double Room" />
-          <div class="room-badge">Most Popular</div>
-        </div>
+        <div class="room-img"><img src="images/mila_11_room_2.jpg" alt="Deluxe Double Room" /><div class="room-badge">Most Popular</div></div>
         <div class="room-info">
           <h3 class="room-name">Deluxe Double Room</h3>
           <p class="room-desc">Stylish wooden headboard, sage-green walls, and soft natural lighting. A fresh, modern space built for deep relaxation.</p>
@@ -148,11 +169,8 @@
           <a href="pages/booking.html" class="room-book-btn">Book This Room →</a>
         </div>
       </div>
-
       <div class="room-card reveal">
-        <div class="room-img">
-          <img src="images/mila_12_room_2.jpg" alt="Classic Comfort Room" />
-        </div>
+        <div class="room-img"><img src="images/classic room.jpeg" alt="Classic Comfort Room" /></div>
         <div class="room-info">
           <h3 class="room-name">Classic Comfort Room</h3>
           <p class="room-desc">Clean, warm, and thoughtfully equipped. Great value with everything you need for a restful stay in Nyeri.</p>
@@ -163,7 +181,6 @@
           <a href="pages/booking.html" class="room-book-btn">Book This Room →</a>
         </div>
       </div>
-
     </div>
   </section>
 
@@ -205,9 +222,9 @@
   <!-- AMENITIES -->
   <section class="amenities">
     <div class="amen-imgs">
-      <div class="amen-img tall"><img src="images/mila_22.jpg" alt="Upper View" /><span class="img-label">Grand Interior</span></div>
-      <div class="amen-img"><img src="images/mila_20.jpg" alt="Lounge" /><span class="img-label">Lounge</span></div>
-      <div class="amen-img"><img src="images/mila_19.jpg" alt="Chandelier" /><span class="img-label">Chandelier Detail</span></div>
+      <div class="amen-img tall"><img src="images/chandelier.jpeg" alt="Grand Interior" /><span class="img-label">Grand Interior</span></div>
+      <div class="amen-img"><img src="images/sitting area 8.jpeg" alt="Lounge" /><span class="img-label">Lounge</span></div>
+      <div class="amen-img"><img src="images/ceiling 2.jpeg" alt="Chandelier" /><span class="img-label">Chandelier Detail</span></div>
     </div>
     <div class="amen-content">
       <p class="section-tag">✦ What We Offer</p>
