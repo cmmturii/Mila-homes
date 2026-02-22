@@ -61,9 +61,9 @@ app.get("/api/rooms/availability",async(req,res)=>{
     res.json(rooms.map(r=>({...r,available:!booked.has(r.id),amenities:Array.isArray(r.amenities)?r.amenities:JSON.parse(r.amenities||"[]")})));
   }catch(e){
     res.json([
-      {id:1,name:"The Attic Suite",price_per_night:5500,capacity:2,available:true,amenities:["En-suite","Timber Beams","Double Bed","Wi-Fi"],image_url:""},
-      {id:2,name:"Deluxe Double Room",price_per_night:4500,capacity:2,available:true,amenities:["Garden View","Double Bed","Breakfast","Wi-Fi"],image_url:""},
-      {id:3,name:"Classic Comfort Room",price_per_night:3500,capacity:2,available:true,amenities:["Double Bed","Wi-Fi","Breakfast","Hot Shower"],image_url:""},
+      {id:1,name:"The Attic Suite",price_per_night:4000,capacity:2,available:true,amenities:["En-suite","Timber Beams","Double Bed","Wi-Fi"],image_url:""},
+      {id:2,name:"Deluxe Double Room",price_per_night:4000,capacity:2,available:true,amenities:["Garden View","Double Bed","Breakfast","Wi-Fi"],image_url:""},
+      {id:3,name:"Classic Comfort Room",price_per_night:4000,capacity:2,available:true,amenities:["Double Bed","Wi-Fi","Breakfast","Hot Shower"],image_url:""},
     ]);
   }
 });

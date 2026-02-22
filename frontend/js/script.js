@@ -78,7 +78,8 @@ function initDates() {
   tomorrow.setDate(tomorrow.getDate() + 1);
   dayAfter.setDate(dayAfter.getDate() + 2);
 
-  checkin.min   = toISO(today);
+  const checkin = document.getElementById('checkin');
+if (checkin) checkin.min = toISO(today);
   checkin.value = toISO(tomorrow);
   checkout.min  = toISO(dayAfter);
   checkout.value = toISO(dayAfter);
