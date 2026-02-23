@@ -9,26 +9,18 @@
     :root{--forest:#2a4a35;--gold:#c9973a;--cream:#f7f3ec;--charcoal:#1e1c18;}
     *{margin:0;padding:0;box-sizing:border-box;}
     body{font-family:"DM Sans",sans-serif;background:var(--cream);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;}
-
     .card{background:white;border-radius:8px;max-width:500px;width:100%;overflow:hidden;box-shadow:0 8px 40px rgba(30,28,24,0.14);}
-
-    /* Header */
-    .card-header{background:var(--forest);padding:36px 32px;text-align:center;}
+    .card-header{background:var(--forest);padding:36px 32px;text-align:center;transition:background 0.4s;}
+    .card-header.cancelled-header{background:#c0392b;}
     .check-circle{width:64px;height:64px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:1.8rem;}
     .card-header h1{font-family:"Playfair Display",serif;color:white;font-size:1.5rem;margin-bottom:4px;}
     .card-header p{color:rgba(255,255,255,0.6);font-size:0.82rem;}
-
-    /* Receipt badge */
     .receipt-badge{margin:24px 24px 0;background:rgba(42,74,53,0.07);border:1px solid rgba(42,74,53,0.15);border-radius:6px;padding:14px;text-align:center;}
     .receipt-badge p{font-size:0.65rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--forest);margin-bottom:4px;font-weight:600;}
     .receipt-num{font-family:"Playfair Display",serif;font-size:1.2rem;color:var(--forest);letter-spacing:0.06em;}
-
-    /* Room image */
-    .room-preview{margin:20px 24px 0;height:140px;border-radius:6px;overflow:hidden;display:none;}
+    .room-preview{margin:20px 24px 0;height:160px;border-radius:6px;overflow:hidden;display:none;}
     .room-preview img{width:100%;height:100%;object-fit:cover;}
     .room-preview.show{display:block;}
-
-    /* Details */
     .card-body{padding:20px 24px;}
     .detail-row{display:flex;justify-content:space-between;align-items:flex-start;padding:9px 0;border-bottom:1px solid rgba(30,28,24,0.06);font-size:0.84rem;gap:12px;}
     .detail-row:last-of-type{border-bottom:none;}
@@ -38,46 +30,52 @@
     .total-row .label{font-weight:600;color:var(--forest);font-size:0.9rem;}
     .total-row .amount{font-family:"Playfair Display",serif;font-size:1.6rem;color:var(--gold);}
 
-    /* Actions */
-    .actions{padding:0 24px 24px;display:flex;flex-direction:column;gap:10px;}
+    /* CANCEL BOX */
+    .cancel-box{margin:16px 24px 0;border-radius:6px;padding:14px;text-align:center;border:1.5px solid rgba(231,76,60,0.25);background:rgba(231,76,60,0.04);}
+    .cancel-box p{font-size:0.78rem;color:rgba(30,28,24,0.55);margin-bottom:6px;}
+    .cancel-timer{font-family:"Playfair Display",serif;font-size:1.8rem;color:#c0392b;font-weight:700;letter-spacing:0.05em;}
+    .cancel-box.expired{border-color:rgba(30,28,24,0.1);background:rgba(30,28,24,0.03);}
+    .cancel-box.expired .cancel-timer{font-family:"DM Sans",sans-serif;font-size:0.8rem;color:rgba(30,28,24,0.4);}
+    .cancelled-notice{margin:16px 24px 0;background:rgba(231,76,60,0.07);border:1px solid rgba(231,76,60,0.2);border-radius:6px;padding:16px;text-align:center;display:none;}
+    .cancelled-notice p{color:#c0392b;font-size:0.88rem;font-weight:600;}
+    .cancelled-notice span{display:block;font-size:0.75rem;color:rgba(30,28,24,0.5);font-weight:400;margin-top:4px;}
+
+    .actions{padding:16px 24px 24px;display:flex;flex-direction:column;gap:10px;}
     .btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:13px 20px;border-radius:4px;font-size:0.76rem;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;cursor:pointer;border:none;transition:all 0.2s;font-family:"DM Sans",sans-serif;}
     .btn-green{background:#25D366;color:white;}
     .btn-green:hover{background:#1da851;transform:translateY(-1px);}
     .btn-outline{background:none;border:1.5px solid rgba(30,28,24,0.14);color:var(--charcoal);}
     .btn-outline:hover{border-color:var(--forest);color:var(--forest);}
-
-    /* Print styles */
-    @media print{
-      body{background:white;padding:0;}
-      .card{box-shadow:none;max-width:100%;}
-      .actions{display:none;}
-    }
-    @media(max-width:480px){
-      body{padding:12px;}
-      .card-header{padding:28px 20px;}
-      .card-body{padding:16px 18px;}
-      .actions{padding:0 18px 20px;}
-      .receipt-badge,.room-preview{margin-left:18px;margin-right:18px;}
-    }
+    .btn-cancel{background:rgba(231,76,60,0.07);color:#c0392b;border:1.5px solid rgba(231,76,60,0.2);}
+    .btn-cancel:hover{background:rgba(231,76,60,0.14);}
+    .btn-cancel:disabled{opacity:0.35;cursor:not-allowed;transform:none !important;}
+    @media print{body{background:white;padding:0;}.card{box-shadow:none;max-width:100%;}.actions,.cancel-box{display:none;}}
+    @media(max-width:480px){body{padding:12px;}.card-header{padding:28px 20px;}.card-body{padding:16px 18px;}.actions{padding:12px 18px 20px;}.receipt-badge,.room-preview,.cancel-box,.cancelled-notice{margin-left:18px;margin-right:18px;}}
   </style>
 </head>
 <body>
 
 <div class="card">
-
-  <div class="card-header">
-    <div class="check-circle">✅</div>
-    <h1>Booking Confirmed!</h1>
-    <p>Thank you for choosing Mila Homes, Nyeri</p>
+  <div class="card-header" id="cardHeader">
+    <div class="check-circle" id="headerIcon">✅</div>
+    <h1 id="headerTitle">Booking Confirmed!</h1>
+    <p id="headerSub">Thank you for choosing Mila Homes, Nyeri</p>
   </div>
 
   <div class="receipt-badge">
     <p>M-Pesa Receipt Number</p>
-    <div class="receipt-num" id="receiptNum">—</div>
+    <div class="receipt-num" id="receiptNum">PENDING</div>
   </div>
 
+  <!-- Shown after cancellation -->
+  <div class="cancelled-notice" id="cancelledNotice">
+    <p>❌ Booking Cancelled</p>
+    <span>Your booking has been cancelled. Contact us on WhatsApp if you need help.</span>
+  </div>
+
+  <!-- Room image -->
   <div class="room-preview" id="roomPreview">
-    <img id="roomPreviewImg" src="" alt="Room" loading="lazy" />
+    <img id="roomPreviewImg" src="" alt="Room" />
   </div>
 
   <div class="card-body">
@@ -90,9 +88,16 @@
     <div class="detail-row"><span class="label">Nights</span><span class="value" id="detNights">—</span></div>
     <div class="detail-row"><span class="label">Guests</span><span class="value" id="detGuests">—</span></div>
     <div class="total-row">
-      <span class="label">Total Paid</span>
+      <span class="label">Total</span>
       <span class="amount" id="detTotal">Ksh —</span>
     </div>
+  </div>
+
+  <!-- CANCELLATION TIMER -->
+  <div class="cancel-box" id="cancelBox">
+    <p>🕐 Free cancellation available for:</p>
+    <div class="cancel-timer" id="cancelTimer">15:00</div>
+    <p style="font-size:0.7rem;margin-top:4px;color:rgba(30,28,24,0.38);">After this window, WhatsApp us to cancel.</p>
   </div>
 
   <div class="actions">
@@ -100,69 +105,168 @@
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
       Message Us on WhatsApp
     </a>
+    <button id="cancelBtn" class="btn btn-cancel" onclick="cancelBooking()">✕ Cancel This Booking</button>
     <button onclick="window.print()" class="btn btn-outline">🖨️ Print / Save Receipt</button>
     <a href="../index.html" class="btn btn-outline">← Back to Mila Homes</a>
   </div>
-
 </div>
 
 <script>
-  const API="https://mila-homes.vercel.app/api";
+  const SUPABASE_URL = "https://dwgqjtkdwndviglbelnr.supabase.co";
+  const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3Z3FqdGtkd25kdmlnbGJlbG5yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2ODQxNTUsImV4cCI6MjA4NzI2MDE1NX0.YDeTjLc_nnl8j23Jf6seQxzmZ3LNnupnEdBO2FAQlJk";
+  const CANCEL_MINUTES = 15;
+
+  // Room image map — local images for each room
+  const ROOM_IMAGES = {
+    "The Attic Suite I":    "../images/uj.jpeg",
+    "The Attic Suite II":   "../images/uj2.jpeg",
+    "Deluxe Double Room":   "../images/mila_11_room_2.jpg",
+    "Classic Comfort Room": "../images/classic room.jpeg"
+  };
+
   const params  = new URLSearchParams(window.location.search);
   const bId     = params.get("booking");
   const receipt = params.get("receipt");
 
-  // 1. Show receipt number immediately
-  document.getElementById("receiptNum").textContent = receipt && receipt !== "null" ? receipt : "PENDING";
-  document.getElementById("detId").textContent = "#" + (bId || "—");
+  if (bId)     document.getElementById("detId").textContent      = "#" + bId;
+  if (receipt && receipt !== "null") document.getElementById("receiptNum").textContent = receipt;
 
-  // 2. Read from sessionStorage first (instant, no API needed)
-  const stored = JSON.parse(sessionStorage.getItem("milaBooking") || "{}");
+  // Read from sessionStorage
+  let stored = {};
+  try { stored = JSON.parse(sessionStorage.getItem("milaBooking") || "{}"); } catch(e) {}
 
-  if (stored.guestName)  document.getElementById("detName").textContent    = stored.guestName;
-  if (stored.guestPhone) document.getElementById("detPhone").textContent   = stored.guestPhone;
-  if (stored.room)       document.getElementById("detRoom").textContent    = stored.room;
-  if (stored.checkin)    document.getElementById("detCheckin").textContent = new Date(stored.checkin+"T00:00").toDateString();
-  if (stored.checkout)   document.getElementById("detCheckout").textContent= new Date(stored.checkout+"T00:00").toDateString();
-  if (stored.nights)     document.getElementById("detNights").textContent  = stored.nights + (stored.nights>1?" nights":" night");
-  if (stored.guests)     document.getElementById("detGuests").textContent  = stored.guests + (stored.guests>1?" guests":" guest");
-  if (stored.total)      document.getElementById("detTotal").textContent   = "Ksh " + Number(stored.total).toLocaleString();
+  if (stored.bookingId)  document.getElementById("detId").textContent       = "#" + stored.bookingId;
+  if (stored.guestName)  document.getElementById("detName").textContent     = stored.guestName;
+  if (stored.guestPhone) document.getElementById("detPhone").textContent    = stored.guestPhone;
+  if (stored.room)       document.getElementById("detRoom").textContent     = stored.room;
+  if (stored.checkin)    document.getElementById("detCheckin").textContent  = new Date(stored.checkin + "T00:00").toDateString();
+  if (stored.checkout)   document.getElementById("detCheckout").textContent = new Date(stored.checkout + "T00:00").toDateString();
+  if (stored.nights)     document.getElementById("detNights").textContent   = stored.nights + (stored.nights > 1 ? " nights" : " night");
+  if (stored.guests)     document.getElementById("detGuests").textContent   = stored.guests + (stored.guests > 1 ? " guests" : " guest");
+  if (stored.total)      document.getElementById("detTotal").textContent    = "Ksh " + Number(stored.total).toLocaleString();
 
-  // Show room image if available
-  if (stored.image) {
+  // Show room image using local path based on room name
+  const roomName  = stored.room || "";
+  const localImg  = ROOM_IMAGES[roomName];
+  const imgToShow = localImg || stored.image || "";
+  if (imgToShow) {
     const preview = document.getElementById("roomPreview");
-    const img = document.getElementById("roomPreviewImg");
-    img.src = stored.image;
-    img.onerror = () => { preview.style.display = "none"; };
+    const img     = document.getElementById("roomPreviewImg");
+    img.src       = imgToShow;
+    img.onerror   = () => { preview.style.display = "none"; };
     preview.classList.add("show");
   }
 
-  // Update WhatsApp link with booking details
+  // WhatsApp link
   if (stored.guestName && stored.room) {
-    const waMsg = encodeURIComponent(`Hi Mila Homes! My booking is confirmed.\nName: ${stored.guestName}\nRoom: ${stored.room}\nCheck-in: ${stored.checkin}\nReceipt: ${receipt}`);
+    const waMsg = encodeURIComponent(
+      `Hi Mila Homes! 👋\nBooking details:\nName: ${stored.guestName}\nRoom: ${stored.room}\nCheck-in: ${stored.checkin}\nCheck-out: ${stored.checkout}\nTotal: Ksh ${Number(stored.total).toLocaleString()}\nBooking ID: #${stored.bookingId || bId}`
+    );
     document.getElementById("waLink").href = `https://wa.me/254713151177?text=${waMsg}`;
   }
 
-  // 3. Also try API for full details (if backend connected)
-  if (bId && !bId.startsWith("LOCAL") && !bId.startsWith("DEV")) {
-    fetch(`${API}/bookings/${bId}`)
-      .then(r => r.json())
-      .then(b => {
-        if (b.guest_name)  document.getElementById("detName").textContent    = b.guest_name;
-        if (b.guest_phone) document.getElementById("detPhone").textContent   = b.guest_phone;
-        if (b.rooms?.name) document.getElementById("detRoom").textContent    = b.rooms.name;
-        if (b.check_in)    document.getElementById("detCheckin").textContent = new Date(b.check_in+"T00:00").toDateString();
-        if (b.check_out)   document.getElementById("detCheckout").textContent= new Date(b.check_out+"T00:00").toDateString();
-        if (b.nights)      document.getElementById("detNights").textContent  = b.nights + " nights";
-        if (b.guests)      document.getElementById("detGuests").textContent  = b.guests + " guests";
-        const paid = b.amount_paid || b.total_price;
-        if (paid)          document.getElementById("detTotal").textContent   = "Ksh " + Number(paid).toLocaleString();
-        if (b.mpesa_receipt) document.getElementById("receiptNum").textContent = b.mpesa_receipt;
-      }).catch(() => {});
+  // ── CANCELLATION TIMER ──────────────────────────
+  const bookingTime = stored.createdAt ? new Date(stored.createdAt) : new Date();
+  const cancelDeadline = new Date(bookingTime.getTime() + CANCEL_MINUTES * 60 * 1000);
+
+  function updateTimer() {
+    const now       = new Date();
+    const remaining = cancelDeadline - now;
+    const cancelBtn = document.getElementById("cancelBtn");
+    const cancelBox = document.getElementById("cancelBox");
+    const timerEl   = document.getElementById("cancelTimer");
+
+    if (remaining <= 0) {
+      // Window expired
+      cancelBtn.disabled = true;
+      cancelBox.classList.add("expired");
+      timerEl.textContent = "Cancellation window has closed";
+      clearInterval(timerInterval);
+      return;
+    }
+
+    const mins = Math.floor(remaining / 60000);
+    const secs = Math.floor((remaining % 60000) / 1000);
+    timerEl.textContent = `${String(mins).padStart(2,"0")}:${String(secs).padStart(2,"0")}`;
+
+    // Turn red when under 2 minutes
+    if (remaining < 2 * 60 * 1000) {
+      timerEl.style.color = "#e74c3c";
+      cancelBox.style.borderColor = "rgba(231,76,60,0.5)";
+      cancelBox.style.background  = "rgba(231,76,60,0.08)";
+    }
   }
 
-  // Clear session after reading (tidy up)
-  setTimeout(() => sessionStorage.removeItem("milaBooking"), 5000);
+  const timerInterval = setInterval(updateTimer, 1000);
+  updateTimer();
+
+  // ── CANCEL BOOKING ──────────────────────────────
+  async function cancelBooking() {
+    const bookingIdToCancel = stored.bookingId || bId;
+    if (!bookingIdToCancel || bookingIdToCancel === "pending") {
+      alert("Cannot cancel — booking ID not found. Please WhatsApp us to cancel.");
+      return;
+    }
+
+    if (!confirm("Are you sure you want to cancel this booking?")) return;
+
+    const btn = document.getElementById("cancelBtn");
+    btn.textContent = "Cancelling...";
+    btn.disabled = true;
+
+    try {
+      const res = await fetch(`${SUPABASE_URL}/rest/v1/bookings?id=eq.${bookingIdToCancel}`, {
+        method: "PATCH",
+        headers: {
+          "apikey": SUPABASE_KEY,
+          "Authorization": `Bearer ${SUPABASE_KEY}`,
+          "Content-Type": "application/json",
+          "Prefer": "return=representation"
+        },
+        body: JSON.stringify({ status: "cancelled" })
+      });
+
+      if (res.ok) {
+        // Update UI to show cancelled state
+        document.getElementById("cardHeader").classList.add("cancelled-header");
+        document.getElementById("headerIcon").textContent  = "❌";
+        document.getElementById("headerTitle").textContent = "Booking Cancelled";
+        document.getElementById("headerSub").textContent   = "Your booking has been cancelled";
+        document.getElementById("cancelledNotice").style.display = "block";
+        document.getElementById("cancelBox").style.display = "none";
+        btn.style.display = "none";
+
+        // Clear session
+        sessionStorage.removeItem("milaBooking");
+
+        // Send WhatsApp notification
+        const waMsg = encodeURIComponent(
+          `Hi Mila Homes, I have cancelled my booking.\nBooking ID: #${bookingIdToCancel}\nName: ${stored.guestName || "—"}\nRoom: ${stored.room || "—"}`
+        );
+        setTimeout(() => {
+          window.open(`https://wa.me/254713151177?text=${waMsg}`, "_blank");
+        }, 800);
+
+      } else {
+        alert("Could not cancel booking. Please WhatsApp us directly.");
+        btn.textContent = "✕ Cancel This Booking";
+        btn.disabled = false;
+      }
+    } catch(e) {
+      alert("Network error. Please WhatsApp us to cancel.");
+      btn.textContent = "✕ Cancel This Booking";
+      btn.disabled = false;
+    }
+  }
+
+  // Save booking creation time if not already saved
+  if (stored.bookingId && !stored.createdAt) {
+    stored.createdAt = new Date().toISOString();
+    sessionStorage.setItem("milaBooking", JSON.stringify(stored));
+  }
+
+  // Keep sessionStorage for 30 minutes
+  setTimeout(() => sessionStorage.removeItem("milaBooking"), 30 * 60 * 1000);
 </script>
 
 </body>

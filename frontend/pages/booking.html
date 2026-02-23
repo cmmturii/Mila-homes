@@ -15,7 +15,6 @@
     html { scroll-behavior: smooth; }
     body { font-family: "DM Sans", sans-serif; background: var(--warm); color: var(--charcoal); }
 
-    /* NAV */
     nav {
       background: white; padding: 16px 48px;
       display: flex; justify-content: space-between; align-items: center;
@@ -26,20 +25,17 @@
     .back-link { font-size: 0.8rem; color: var(--sage); text-decoration: none; letter-spacing: 0.1em; }
     .back-link:hover { color: var(--forest); }
 
-    /* PAGE HEADER */
     .page-header { background: var(--forest); padding: 48px; text-align: center; }
     .page-header p { font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
     .page-header h1 { font-family: "Playfair Display", serif; font-size: 2.4rem; color: white; }
     .page-header h1 em { font-style: italic; color: var(--gold); }
 
-    /* MAIN LAYOUT */
     .booking-layout {
       max-width: 1100px; margin: 0 auto;
       display: grid; grid-template-columns: 1.1fr 0.9fr;
       gap: 32px; padding: 48px 24px;
     }
 
-    /* STEP INDICATOR */
     .steps { display: flex; gap: 0; margin-bottom: 28px; }
     .step {
       flex: 1; text-align: center; padding: 12px;
@@ -51,7 +47,6 @@
     .step.active { color: var(--forest); border-bottom-color: var(--gold); background: white; font-weight: 600; }
     .step.done { color: var(--sage); border-bottom-color: var(--sage); }
 
-    /* FORM CARD */
     .form-card {
       background: white; border-radius: 4px; padding: 36px;
       border: 1px solid rgba(30,28,24,0.08);
@@ -63,7 +58,6 @@
       padding-bottom: 16px; border-bottom: 1px solid rgba(30,28,24,0.08);
     }
 
-    /* ROOM CARDS */
     .room-cards { display: flex; flex-direction: column; gap: 14px; margin-bottom: 28px; }
     .room-option { position: relative; }
     .room-option input[type="radio"] { position: absolute; opacity: 0; width: 100%; height: 100%; cursor: pointer; z-index: 2; margin: 0; }
@@ -90,7 +84,25 @@
       text-transform: uppercase; z-index: 3;
     }
 
-    /* DATE ROW */
+    .whole-house-badge {
+      position: absolute; top: 10px; left: 10px;
+      background: var(--gold); color: white; font-size: 0.6rem;
+      padding: 3px 10px; border-radius: 2px; letter-spacing: 0.08em;
+      text-transform: uppercase; z-index: 3; font-weight: 700;
+    }
+    .whole-house-label {
+      border-color: var(--gold) !important;
+      background: rgba(201,151,58,0.03);
+    }
+    .room-option input:checked + .whole-house-label {
+      border-color: var(--forest) !important;
+      background: rgba(42,74,53,0.05) !important;
+    }
+    .whole-house-divider {
+      font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(30,28,24,0.4); font-weight: 600; margin: 8px 0 4px;
+    }
+
     .date-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
     .nights-badge {
       grid-column: 1 / -1; background: rgba(42,74,53,0.08);
@@ -100,7 +112,6 @@
     }
     .nights-badge.show { display: block; }
 
-    /* FORM ELEMENTS */
     .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
     .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
     .form-group.half { margin-bottom: 0; }
@@ -114,7 +125,6 @@
     input:focus, select:focus, textarea:focus { border-color: var(--forest); box-shadow: 0 0 0 3px rgba(42,74,53,0.08); }
     textarea { resize: vertical; min-height: 80px; }
 
-    /* SUBMIT BTN */
     .submit-btn {
       width: 100%; background: var(--forest); color: white; border: none;
       padding: 16px; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.15em;
@@ -124,7 +134,6 @@
     .submit-btn:hover { background: var(--gold); color: var(--charcoal); transform: translateY(-2px); }
     .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
-    /* SUMMARY SIDEBAR */
     .summary-card {
       background: white; border-radius: 4px; padding: 28px;
       border: 1px solid rgba(30,28,24,0.08);
@@ -166,7 +175,6 @@
     }
     .whatsapp-alt:hover { background: #1da851; transform: translateY(-1px); }
 
-    /* ERROR / LOADING */
     .loading-rooms { text-align: center; padding: 32px; color: rgba(30,28,24,0.4); font-size: 0.85rem; }
     .error-msg {
       background: rgba(231,76,60,0.08); border: 1px solid rgba(231,76,60,0.2);
@@ -187,19 +195,16 @@
 </head>
 <body>
 
-  <!-- NAV -->
   <nav>
     <a href="../index.html" class="logo">Mila <span>Homes</span></a>
     <a href="../index.html" class="back-link">← Back to Home</a>
   </nav>
 
-  <!-- PAGE HEADER -->
   <div class="page-header">
     <p>✦ Reservations</p>
     <h1>Book Your Stay at <em>Mila Homes</em></h1>
   </div>
 
-  <!-- STEP INDICATOR -->
   <div style="max-width:1100px; margin: 0 auto; padding: 0 24px;">
     <div class="steps">
       <div class="step active" id="step1-tab">1. Choose Room &amp; Dates</div>
@@ -208,13 +213,10 @@
     </div>
   </div>
 
-  <!-- MAIN LAYOUT -->
   <div class="booking-layout">
-
-    <!-- LEFT: BOOKING FORM -->
     <div>
 
-      <!-- STEP 1: Room + Dates -->
+      <!-- STEP 1 -->
       <div class="form-card" id="step1">
         <h2>🏡 Choose Your Room &amp; Dates</h2>
         <div class="date-row">
@@ -245,7 +247,7 @@
         <button class="submit-btn" onclick="goToStep2()">Continue → Guest Details</button>
       </div>
 
-      <!-- STEP 2: Guest Details -->
+      <!-- STEP 2 -->
       <div class="form-card" id="step2" style="display:none;">
         <h2>👤 Your Details</h2>
         <div class="form-row">
@@ -289,7 +291,7 @@
         </div>
       </div>
 
-      <!-- STEP 3: M-Pesa Payment -->
+      <!-- STEP 3 -->
       <div class="form-card" id="step3" style="display:none;">
         <h2>💳 Pay via M-Pesa</h2>
         <div style="background: rgba(42,74,53,0.06); border-radius:4px; padding:20px; margin-bottom:24px; text-align:center;">
@@ -317,7 +319,7 @@
 
     </div>
 
-    <!-- RIGHT: BOOKING SUMMARY -->
+    <!-- SUMMARY SIDEBAR -->
     <div class="summary-card">
       <h3>📋 Booking Summary</h3>
       <img id="summaryImg" class="summary-img" src="" alt="Selected room" />
@@ -349,7 +351,6 @@
   </div>
 
   <script>
-    // ── SUPABASE CONFIG ──────────────────────────
     const SUPABASE_URL = "https://dwgqjtkdwndviglbelnr.supabase.co";
     const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3Z3FqdGtkd25kdmlnbGJlbG5yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2ODQxNTUsImV4cCI6MjA4NzI2MDE1NX0.YDeTjLc_nnl8j23Jf6seQxzmZ3LNnupnEdBO2FAQlJk";
 
@@ -360,7 +361,6 @@
       "Prefer": "return=representation"
     };
 
-    // ── STATE ────────────────────────────────────
     let selectedRoom = null;
     let bookingId    = null;
 
@@ -371,7 +371,26 @@
       { id: 4, name: "Classic Comfort Room", price_per_night: 4000, capacity: 2, image_url: "../images/mila_12_room_2.jpg", amenities: ["Double Bed","Wi-Fi","Breakfast","Hot Shower"],  available: true },
     ];
 
-    // ── DATE SETUP ───────────────────────────────
+    // Local images for summary display
+    const LOCAL_IMAGES = {
+      "The Attic Suite I":    "../images/uj.jpeg",
+      "The Attic Suite II":   "../images/uj2.jpeg",
+      "Deluxe Double Room":   "../images/mila_11_room_2.jpg",
+      "Classic Comfort Room": "../images/mila_12_room_2.jpg"
+    };
+
+    const WHOLE_HOUSE = {
+      id: "whole_house",
+      name: "Entire Mila Homes",
+      description: "Book the whole house exclusively. All 4 rooms, lounge, kitchen, garden & outdoor area. Perfect for groups, families & events.",
+      price_per_night: 16000,
+      capacity: 8,
+      image_url: "../images/porch.jpeg",
+      amenities: ["All 4 Rooms", "Full House", "Garden", "Lounge", "Kitchen", "Wi-Fi", "Parking"],
+      available: true,
+      is_whole_house: true
+    };
+
     function initDates() {
       const ci = document.getElementById("checkin");
       const co = document.getElementById("checkout");
@@ -400,54 +419,45 @@
       updateSummary();
     }
 
-    // ── LOAD ROOMS FROM SUPABASE ─────────────────
     async function loadRooms(checkin, checkout) {
       const container = document.getElementById("roomCards");
       container.innerHTML = `<div class="loading-rooms">⏳ Checking availability...</div>`;
-
       try {
-        // 1. Get all rooms
         const roomsRes = await fetch(`${SUPABASE_URL}/rest/v1/rooms?select=*`, { headers: HEADERS });
         const rooms = await roomsRes.json();
-
-        // 2. Get overlapping bookings (exclude cancelled)
         const bookingsRes = await fetch(
           `${SUPABASE_URL}/rest/v1/bookings?select=room_id&check_in=lt.${checkout}&check_out=gt.${checkin}&status=neq.cancelled`,
           { headers: HEADERS }
         );
         const bookedRooms = await bookingsRes.json();
         const bookedIds = bookedRooms.map(b => b.room_id);
-
-        // 3. Mark availability
         const roomsWithAvailability = rooms.map(room => ({
           ...room,
           amenities: typeof room.amenities === "string" ? JSON.parse(room.amenities) : (room.amenities || []),
           available: !bookedIds.includes(room.id)
         }));
-
         renderRooms(roomsWithAvailability);
-
       } catch (e) {
         console.error("Supabase error:", e);
         renderRooms(ROOMS_FALLBACK);
       }
     }
 
-    // ── RENDER ROOMS ─────────────────────────────
     function renderRooms(rooms) {
       const container = document.getElementById("roomCards");
       if (!rooms || rooms.length === 0) {
         container.innerHTML = `<div class="loading-rooms">😔 No rooms found. Try different dates or <a href="https://wa.me/254713151177" style="color:var(--forest)">WhatsApp us</a>.</div>`;
         return;
       }
-      container.innerHTML = rooms.map(room => `
+
+      const roomsHTML = rooms.map(room => `
         <div class="room-option ${!room.available ? 'unavailable' : ''}">
           ${!room.available ? '<div class="unavailable-badge">Fully Booked</div>' : ''}
           <input type="radio" name="room" id="room_${room.id}" value="${room.id}"
             ${!room.available ? 'disabled' : ''}
             onchange="selectRoom(${JSON.stringify(room).replace(/"/g, '&quot;')})" />
           <label class="room-label" for="room_${room.id}">
-            <img src="${room.image_url}" alt="${room.name}" onerror="this.src='../images/lounge area.jpeg'" />
+            <img src="${LOCAL_IMAGES[room.name] || room.image_url}" alt="${room.name}" onerror="this.src='../images/lounge area.jpeg'" />
             <div class="room-label-info">
               <h4>${room.name}</h4>
               <p>${room.description || ""}</p>
@@ -462,14 +472,42 @@
           </label>
         </div>
       `).join("");
+
+      const wholeHouseHTML = `
+        <div class="whole-house-divider">✦ Exclusive Option</div>
+        <div class="room-option">
+          <div class="whole-house-badge">✦ Whole House</div>
+          <input type="radio" name="room" id="room_whole_house" value="whole_house"
+            onchange="selectRoom(${JSON.stringify(WHOLE_HOUSE).replace(/"/g, '&quot;')})" />
+          <label class="room-label whole-house-label" for="room_whole_house">
+            <img src="${WHOLE_HOUSE.image_url}" alt="${WHOLE_HOUSE.name}" onerror="this.src='../images/lounge area.jpeg'" />
+            <div class="room-label-info">
+              <h4>${WHOLE_HOUSE.name}</h4>
+              <p>${WHOLE_HOUSE.description}</p>
+              <div class="amenity-tags">
+                ${WHOLE_HOUSE.amenities.map(a => `<span class="amenity-tag">${a}</span>`).join("")}
+              </div>
+            </div>
+            <div class="room-price-tag">
+              <strong>Ksh ${WHOLE_HOUSE.price_per_night.toLocaleString()}</strong>
+              <span>/night</span>
+            </div>
+          </label>
+        </div>
+      `;
+
+      container.innerHTML = roomsHTML + wholeHouseHTML;
     }
 
+    // The key fix — use LOCAL_IMAGES for summary
     function selectRoom(room) {
+      if (LOCAL_IMAGES[room.name]) {
+        room.image_url = LOCAL_IMAGES[room.name];
+      }
       selectedRoom = room;
       updateSummary();
     }
 
-    // ── UPDATE SUMMARY ───────────────────────────
     function updateSummary() {
       if (!selectedRoom) return;
       const ci = document.getElementById("checkin").value;
@@ -484,6 +522,7 @@
       const img = document.getElementById("summaryImg");
       img.src = selectedRoom.image_url;
       img.classList.add("show");
+      img.onerror = () => { img.style.display = "none"; };
 
       document.getElementById("sumRoom").textContent     = selectedRoom.name;
       document.getElementById("sumCheckin").textContent  = new Date(ci + "T00:00").toDateString();
@@ -494,7 +533,6 @@
       document.getElementById("sumTotal").textContent    = `Ksh ${total.toLocaleString()}`;
     }
 
-    // ── STEP NAVIGATION ──────────────────────────
     function goToStep2() {
       if (!selectedRoom) { alert("Please select a room first."); return; }
       const ci = document.getElementById("checkin").value;
@@ -521,7 +559,6 @@
       document.getElementById("step2-tab").className = "step active";
     }
 
-    // ── CREATE BOOKING IN SUPABASE ───────────────
     async function createBooking() {
       const firstName = document.getElementById("firstName").value.trim();
       const lastName  = document.getElementById("lastName").value.trim();
@@ -533,8 +570,8 @@
         return;
       }
 
-      const ci = document.getElementById("checkin").value;
-      const co = document.getElementById("checkout").value;
+      const ci     = document.getElementById("checkin").value;
+      const co     = document.getElementById("checkout").value;
       const nights = Math.ceil((new Date(co) - new Date(ci)) / (1000 * 60 * 60 * 24));
       const total  = nights * selectedRoom.price_per_night;
 
@@ -547,7 +584,7 @@
           method: "POST",
           headers: HEADERS,
           body: JSON.stringify({
-            room_id:          selectedRoom.id,
+            room_id:          selectedRoom.is_whole_house ? null : selectedRoom.id,
             guest_name:       `${firstName} ${lastName}`,
             guest_email:      email || null,
             guest_phone:      phone,
@@ -556,17 +593,35 @@
             nights:           nights,
             guests:           parseInt(document.getElementById("guests").value),
             occasion:         document.getElementById("occasion").value || null,
-            special_requests: document.getElementById("requests").value || null,
+            special_requests: selectedRoom.is_whole_house
+              ? `WHOLE HOUSE BOOKING. ${document.getElementById("requests").value || ""}`
+              : (document.getElementById("requests").value || null),
             total_price:      total,
             status:           "pending"
           })
         });
 
         const data = await res.json();
-
         if (!res.ok) throw new Error(data.message || "Booking failed");
 
         bookingId = data[0].id;
+
+        sessionStorage.setItem("milaBooking", JSON.stringify({
+          bookingId:  bookingId,
+          guestName:  `${firstName} ${lastName}`,
+          guestPhone: phone,
+          guestEmail: email || "",
+          room:       selectedRoom.name,
+          image:      selectedRoom.image_url,
+          checkin:    ci,
+          checkout:   co,
+          nights:     nights,
+          guests:     document.getElementById("guests").value,
+          rate:       selectedRoom.price_per_night,
+          total:      total,
+          createdAt:  new Date().toISOString()
+        }));
+
         document.getElementById("mpesaPhone").value = phone;
         document.getElementById("step2").style.display = "none";
         document.getElementById("step3").style.display = "block";
@@ -583,7 +638,6 @@
       window.scrollTo(0, 0);
     }
 
-    // ── PAYMENT (WhatsApp since no M-Pesa backend) ──
     async function initiatePayment() {
       const phone = document.getElementById("mpesaPhone").value.trim();
       if (!phone) { alert("Please enter your M-Pesa phone number."); return; }
@@ -591,16 +645,14 @@
       const btn = document.getElementById("payBtn");
       btn.disabled = true;
 
-      // Show confirmation
       document.getElementById("paymentStatus").style.display = "block";
       document.getElementById("payStatusIcon").textContent = "✅";
       document.getElementById("payStatusText").textContent = "Booking saved! Redirecting to WhatsApp to confirm payment...";
 
-      // Build WhatsApp message with booking details
-      const ci = document.getElementById("checkin").value;
-      const co = document.getElementById("checkout").value;
+      const ci     = document.getElementById("checkin").value;
+      const co     = document.getElementById("checkout").value;
       const nights = Math.ceil((new Date(co) - new Date(ci)) / (1000 * 60 * 60 * 24));
-      const total = nights * selectedRoom.price_per_night;
+      const total  = nights * selectedRoom.price_per_night;
 
       const message = encodeURIComponent(
         `Hi Mila Homes! 👋\n\nI've just made a booking:\n` +
@@ -620,7 +672,6 @@
       }, 1500);
     }
 
-    // ── INIT ─────────────────────────────────────
     initDates();
   </script>
 
