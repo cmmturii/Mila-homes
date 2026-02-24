@@ -90,18 +90,9 @@
       padding: 3px 10px; border-radius: 2px; letter-spacing: 0.08em;
       text-transform: uppercase; z-index: 3; font-weight: 700;
     }
-    .whole-house-label {
-      border-color: var(--gold) !important;
-      background: rgba(201,151,58,0.03);
-    }
-    .room-option input:checked + .whole-house-label {
-      border-color: var(--forest) !important;
-      background: rgba(42,74,53,0.05) !important;
-    }
-    .whole-house-divider {
-      font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase;
-      color: rgba(30,28,24,0.4); font-weight: 600; margin: 8px 0 4px;
-    }
+    .whole-house-label { border-color: var(--gold) !important; background: rgba(201,151,58,0.03); }
+    .room-option input:checked + .whole-house-label { border-color: var(--forest) !important; background: rgba(42,74,53,0.05) !important; }
+    .whole-house-divider { font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(30,28,24,0.4); font-weight: 600; margin: 8px 0 4px; }
 
     .date-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
     .nights-badge {
@@ -133,6 +124,15 @@
     }
     .submit-btn:hover { background: var(--gold); color: var(--charcoal); transform: translateY(-2px); }
     .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    .confirmed-banner {
+      background: rgba(42,74,53,0.07); border: 1.5px solid rgba(42,74,53,0.2);
+      border-radius: 6px; padding: 16px 20px; margin-bottom: 24px;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .confirmed-banner .icon { font-size: 1.8rem; }
+    .confirmed-banner h4 { font-family: "Playfair Display", serif; color: var(--forest); font-size: 1rem; margin-bottom: 3px; }
+    .confirmed-banner p { font-size: 0.78rem; color: rgba(30,28,24,0.6); line-height: 1.5; }
 
     .summary-card {
       background: white; border-radius: 4px; padding: 28px;
@@ -293,27 +293,37 @@
 
       <!-- STEP 3 -->
       <div class="form-card" id="step3" style="display:none;">
-        <h2>💳 Pay via M-Pesa</h2>
+        <h2>💳 Complete Your Payment</h2>
+
+        <!-- INSTANT CONFIRMED BANNER -->
+        <div class="confirmed-banner">
+          <div class="icon">✅</div>
+          <div>
+            <h4>Your booking is confirmed!</h4>
+            <p>Complete your M-Pesa payment below to secure your room. Payment verification takes up to 30 minutes.</p>
+          </div>
+        </div>
+
         <div style="background: rgba(42,74,53,0.06); border-radius:4px; padding:20px; margin-bottom:24px; text-align:center;">
           <div style="font-size:2rem; margin-bottom:8px;">📱</div>
-          <p style="font-size:0.9rem; color:rgba(30,28,24,0.7); line-height:1.7;">
-            Send payment via M-Pesa to <strong>0713 151177</strong> and we will confirm your booking within 2 hours.
-          </p>
+          <p style="font-size:0.95rem; color:var(--forest); font-weight:600; margin-bottom:6px;">Send M-Pesa to: <strong>0713 151177</strong></p>
+          <p style="font-size:0.82rem; color:rgba(30,28,24,0.6); line-height:1.6;">We'll WhatsApp you a payment confirmation within 30 minutes of receiving your transfer.</p>
         </div>
+
         <div class="form-group">
           <label for="mpesaPhone">Your M-Pesa Number</label>
           <input type="tel" id="mpesaPhone" placeholder="07XX XXX XXX" />
         </div>
         <div id="paymentStatus" style="display:none; text-align:center; padding:20px;">
           <div style="font-size:2rem; margin-bottom:8px;" id="payStatusIcon">✅</div>
-          <p id="payStatusText" style="font-size:0.9rem; color:rgba(30,28,24,0.7);">Booking submitted! We will confirm via WhatsApp shortly.</p>
+          <p id="payStatusText" style="font-size:0.9rem; color:rgba(30,28,24,0.7);">Booking confirmed! Sending you to WhatsApp...</p>
         </div>
         <div style="display:flex; gap:12px;">
           <button class="submit-btn" style="background:rgba(30,28,24,0.1); color:var(--charcoal);" onclick="goToStep2Show()">← Back</button>
-          <button class="submit-btn" id="payBtn" onclick="initiatePayment()">Confirm Booking →</button>
+          <button class="submit-btn" id="payBtn" onclick="initiatePayment()">I've Sent the Payment →</button>
         </div>
         <p style="text-align:center; margin-top:14px; font-size:0.75rem; color:rgba(30,28,24,0.4);">
-          🔒 We'll contact you on WhatsApp to confirm payment
+          🔒 Your room is held. We'll confirm payment within 30 minutes.
         </p>
       </div>
 
@@ -340,7 +350,7 @@
         </div>
       </div>
       <div class="summary-note">
-        🔒 Booking held for 2 hours after submission. Pay via M-Pesa to confirm.
+        ✅ Booking confirmed instantly. Pay via M-Pesa to secure your room.
       </div>
       <a href="https://wa.me/254713151177" target="_blank" class="whatsapp-alt">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
@@ -365,13 +375,12 @@
     let bookingId    = null;
 
     const ROOMS_FALLBACK = [
-      { id: 1, name: "The Attic Suite I",    price_per_night: 4000, capacity: 2, image_url: "../images/uj.jpeg",            amenities: ["En-suite","Timber Beams","Double Bed","Wi-Fi"], available: true },
-      { id: 2, name: "The Attic Suite II",   price_per_night: 4000, capacity: 2, image_url: "../images/uj2.jpeg",           amenities: ["Artwork","En-suite","Double Bed","Wi-Fi"],      available: true },
-      { id: 3, name: "Deluxe Double Room",   price_per_night: 4000, capacity: 2, image_url: "../images/mila_11_room_2.jpg", amenities: ["Garden View","Double Bed","Breakfast","Wi-Fi"], available: true },
-      { id: 4, name: "Classic Comfort Room", price_per_night: 4000, capacity: 2, image_url: "../images/mila_12_room_2.jpg", amenities: ["Double Bed","Wi-Fi","Breakfast","Hot Shower"],  available: true },
+      { id: 1, name: "The Attic Suite I",    price_per_night: 4000, capacity: 2, image_url: "../images/uj.jpeg",            amenities: ["En-suite","Timber Beams","Wi-Fi"], available: true },
+      { id: 2, name: "The Attic Suite II",   price_per_night: 4000, capacity: 2, image_url: "../images/uj2.jpeg",           amenities: ["Artwork","En-suite","Wi-Fi"],      available: true },
+      { id: 3, name: "Deluxe Double Room",   price_per_night: 4000, capacity: 2, image_url: "../images/mila_11_room_2.jpg", amenities: ["Garden View","Breakfast","Wi-Fi"], available: true },
+      { id: 4, name: "Classic Comfort Room", price_per_night: 4000, capacity: 2, image_url: "../images/mila_12_room_2.jpg", amenities: ["Wi-Fi","Breakfast","Hot Shower"],  available: true },
     ];
 
-    // Local images for summary display
     const LOCAL_IMAGES = {
       "The Attic Suite I":    "../images/uj.jpeg",
       "The Attic Suite II":   "../images/uj2.jpeg",
@@ -446,10 +455,9 @@
     function renderRooms(rooms) {
       const container = document.getElementById("roomCards");
       if (!rooms || rooms.length === 0) {
-        container.innerHTML = `<div class="loading-rooms">😔 No rooms found. Try different dates or <a href="https://wa.me/254713151177" style="color:var(--forest)">WhatsApp us</a>.</div>`;
+        container.innerHTML = `<div class="loading-rooms">😔 No rooms found. <a href="https://wa.me/254713151177" style="color:var(--forest)">WhatsApp us</a>.</div>`;
         return;
       }
-
       const roomsHTML = rooms.map(room => `
         <div class="room-option ${!room.available ? 'unavailable' : ''}">
           ${!room.available ? '<div class="unavailable-badge">Fully Booked</div>' : ''}
@@ -495,15 +503,11 @@
           </label>
         </div>
       `;
-
       container.innerHTML = roomsHTML + wholeHouseHTML;
     }
 
-    // The key fix — use LOCAL_IMAGES for summary
     function selectRoom(room) {
-      if (LOCAL_IMAGES[room.name]) {
-        room.image_url = LOCAL_IMAGES[room.name];
-      }
+      if (LOCAL_IMAGES[room.name]) room.image_url = LOCAL_IMAGES[room.name];
       selectedRoom = room;
       updateSummary();
     }
@@ -576,7 +580,7 @@
       const total  = nights * selectedRoom.price_per_night;
 
       const btn = document.querySelector("#step2 .submit-btn:last-child");
-      btn.textContent = "Creating booking...";
+      btn.textContent = "Confirming your booking...";
       btn.disabled = true;
 
       try {
@@ -647,7 +651,7 @@
 
       document.getElementById("paymentStatus").style.display = "block";
       document.getElementById("payStatusIcon").textContent = "✅";
-      document.getElementById("payStatusText").textContent = "Booking saved! Redirecting to WhatsApp to confirm payment...";
+      document.getElementById("payStatusText").textContent = "Booking confirmed! Sending you to WhatsApp...";
 
       const ci     = document.getElementById("checkin").value;
       const co     = document.getElementById("checkout").value;
@@ -655,7 +659,7 @@
       const total  = nights * selectedRoom.price_per_night;
 
       const message = encodeURIComponent(
-        `Hi Mila Homes! 👋\n\nI've just made a booking:\n` +
+        `Hi Mila Homes! 👋\n\nI've just confirmed a booking:\n` +
         `📋 Booking ID: #${bookingId || "N/A"}\n` +
         `🏡 Room: ${selectedRoom.name}\n` +
         `📅 Check-in: ${ci}\n` +
@@ -663,7 +667,7 @@
         `🌙 Nights: ${nights}\n` +
         `💰 Total: Ksh ${total.toLocaleString()}\n` +
         `📱 M-Pesa Number: ${phone}\n\n` +
-        `Please confirm my booking. Thank you!`
+        `I have sent the payment. Please confirm. Thank you!`
       );
 
       setTimeout(() => {

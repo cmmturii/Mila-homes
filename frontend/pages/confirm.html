@@ -14,11 +14,12 @@
     .card-header.cancelled-header{background:#c0392b;}
     .check-circle{width:64px;height:64px;background:rgba(255,255,255,0.15);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:1.8rem;}
     .card-header h1{font-family:"Playfair Display",serif;color:white;font-size:1.5rem;margin-bottom:4px;}
-    .card-header p{color:rgba(255,255,255,0.6);font-size:0.82rem;}
+    .card-header p{color:rgba(255,255,255,0.7);font-size:0.82rem;line-height:1.5;}
     .receipt-badge{margin:24px 24px 0;background:rgba(42,74,53,0.07);border:1px solid rgba(42,74,53,0.15);border-radius:6px;padding:14px;text-align:center;}
     .receipt-badge p{font-size:0.65rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--forest);margin-bottom:4px;font-weight:600;}
     .receipt-num{font-family:"Playfair Display",serif;font-size:1.2rem;color:var(--forest);letter-spacing:0.06em;}
-    .room-preview{margin:20px 24px 0;height:160px;border-radius:6px;overflow:hidden;display:none;}
+    .payment-note{margin:12px 24px 0;background:rgba(201,151,58,0.08);border:1px solid rgba(201,151,58,0.2);border-radius:6px;padding:12px 16px;text-align:center;font-size:0.78rem;color:rgba(30,28,24,0.65);line-height:1.5;}
+    .room-preview{margin:20px 24px 0;height:140px;border-radius:6px;overflow:hidden;display:none;}
     .room-preview img{width:100%;height:100%;object-fit:cover;}
     .room-preview.show{display:block;}
     .card-body{padding:20px 24px;}
@@ -50,7 +51,7 @@
     .btn-cancel:hover{background:rgba(231,76,60,0.14);}
     .btn-cancel:disabled{opacity:0.35;cursor:not-allowed;transform:none !important;}
     @media print{body{background:white;padding:0;}.card{box-shadow:none;max-width:100%;}.actions,.cancel-box{display:none;}}
-    @media(max-width:480px){body{padding:12px;}.card-header{padding:28px 20px;}.card-body{padding:16px 18px;}.actions{padding:12px 18px 20px;}.receipt-badge,.room-preview,.cancel-box,.cancelled-notice{margin-left:18px;margin-right:18px;}}
+    @media(max-width:480px){body{padding:12px;}.card-header{padding:28px 20px;}.card-body{padding:16px 18px;}.actions{padding:12px 18px 20px;}.receipt-badge,.room-preview,.cancel-box,.cancelled-notice,.payment-note{margin-left:18px;margin-right:18px;}}
   </style>
 </head>
 <body>
@@ -59,7 +60,7 @@
   <div class="card-header" id="cardHeader">
     <div class="check-circle" id="headerIcon">✅</div>
     <h1 id="headerTitle">Booking Confirmed!</h1>
-    <p id="headerSub">Thank you for choosing Mila Homes, Nyeri</p>
+    <p id="headerSub">Your room is reserved. Payment verification takes up to 30 minutes — we'll WhatsApp you once confirmed.</p>
   </div>
 
   <div class="receipt-badge">
@@ -67,13 +68,15 @@
     <div class="receipt-num" id="receiptNum">PENDING</div>
   </div>
 
-  <!-- Shown after cancellation -->
+  <div class="payment-note">
+    💳 Send payment to <strong>0713 151177</strong> via M-Pesa if you haven't already. We'll confirm within 30 minutes.
+  </div>
+
   <div class="cancelled-notice" id="cancelledNotice">
     <p>❌ Booking Cancelled</p>
     <span>Your booking has been cancelled. Contact us on WhatsApp if you need help.</span>
   </div>
 
-  <!-- Room image -->
   <div class="room-preview" id="roomPreview">
     <img id="roomPreviewImg" src="" alt="Room" />
   </div>
@@ -93,7 +96,6 @@
     </div>
   </div>
 
-  <!-- CANCELLATION TIMER -->
   <div class="cancel-box" id="cancelBox">
     <p>🕐 Free cancellation available for:</p>
     <div class="cancel-timer" id="cancelTimer">15:00</div>
@@ -116,12 +118,12 @@
   const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR3Z3FqdGtkd25kdmlnbGJlbG5yIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzE2ODQxNTUsImV4cCI6MjA4NzI2MDE1NX0.YDeTjLc_nnl8j23Jf6seQxzmZ3LNnupnEdBO2FAQlJk";
   const CANCEL_MINUTES = 15;
 
-  // Room image map — local images for each room
-  const ROOM_IMAGES = {
+  const LOCAL_IMAGES = {
     "The Attic Suite I":    "../images/uj.jpeg",
     "The Attic Suite II":   "../images/uj2.jpeg",
     "Deluxe Double Room":   "../images/mila_11_room_2.jpg",
-    "Classic Comfort Room": "../images/classic room.jpeg"
+    "Classic Comfort Room": "../images/mila_12_room_2.jpg",
+    "Entire Mila Homes":    "../images/porch.jpeg"
   };
 
   const params  = new URLSearchParams(window.location.search);
@@ -131,7 +133,6 @@
   if (bId)     document.getElementById("detId").textContent      = "#" + bId;
   if (receipt && receipt !== "null") document.getElementById("receiptNum").textContent = receipt;
 
-  // Read from sessionStorage
   let stored = {};
   try { stored = JSON.parse(sessionStorage.getItem("milaBooking") || "{}"); } catch(e) {}
 
@@ -145,10 +146,8 @@
   if (stored.guests)     document.getElementById("detGuests").textContent   = stored.guests + (stored.guests > 1 ? " guests" : " guest");
   if (stored.total)      document.getElementById("detTotal").textContent    = "Ksh " + Number(stored.total).toLocaleString();
 
-  // Show room image using local path based on room name
-  const roomName  = stored.room || "";
-  const localImg  = ROOM_IMAGES[roomName];
-  const imgToShow = localImg || stored.image || "";
+  // Show room image
+  const imgToShow = LOCAL_IMAGES[stored.room] || stored.image || "";
   if (imgToShow) {
     const preview = document.getElementById("roomPreview");
     const img     = document.getElementById("roomPreviewImg");
@@ -165,8 +164,8 @@
     document.getElementById("waLink").href = `https://wa.me/254713151177?text=${waMsg}`;
   }
 
-  // ── CANCELLATION TIMER ──────────────────────────
-  const bookingTime = stored.createdAt ? new Date(stored.createdAt) : new Date();
+  // CANCELLATION TIMER
+  const bookingTime    = stored.createdAt ? new Date(stored.createdAt) : new Date();
   const cancelDeadline = new Date(bookingTime.getTime() + CANCEL_MINUTES * 60 * 1000);
 
   function updateTimer() {
@@ -177,7 +176,6 @@
     const timerEl   = document.getElementById("cancelTimer");
 
     if (remaining <= 0) {
-      // Window expired
       cancelBtn.disabled = true;
       cancelBox.classList.add("expired");
       timerEl.textContent = "Cancellation window has closed";
@@ -189,7 +187,6 @@
     const secs = Math.floor((remaining % 60000) / 1000);
     timerEl.textContent = `${String(mins).padStart(2,"0")}:${String(secs).padStart(2,"0")}`;
 
-    // Turn red when under 2 minutes
     if (remaining < 2 * 60 * 1000) {
       timerEl.style.color = "#e74c3c";
       cancelBox.style.borderColor = "rgba(231,76,60,0.5)";
@@ -200,14 +197,12 @@
   const timerInterval = setInterval(updateTimer, 1000);
   updateTimer();
 
-  // ── CANCEL BOOKING ──────────────────────────────
   async function cancelBooking() {
     const bookingIdToCancel = stored.bookingId || bId;
     if (!bookingIdToCancel || bookingIdToCancel === "pending") {
       alert("Cannot cancel — booking ID not found. Please WhatsApp us to cancel.");
       return;
     }
-
     if (!confirm("Are you sure you want to cancel this booking?")) return;
 
     const btn = document.getElementById("cancelBtn");
@@ -227,28 +222,22 @@
       });
 
       if (res.ok) {
-        // Update UI to show cancelled state
         document.getElementById("cardHeader").classList.add("cancelled-header");
         document.getElementById("headerIcon").textContent  = "❌";
         document.getElementById("headerTitle").textContent = "Booking Cancelled";
         document.getElementById("headerSub").textContent   = "Your booking has been cancelled";
         document.getElementById("cancelledNotice").style.display = "block";
         document.getElementById("cancelBox").style.display = "none";
+        document.getElementById("payment-note") && (document.getElementById("payment-note").style.display = "none");
         btn.style.display = "none";
-
-        // Clear session
         sessionStorage.removeItem("milaBooking");
 
-        // Send WhatsApp notification
         const waMsg = encodeURIComponent(
           `Hi Mila Homes, I have cancelled my booking.\nBooking ID: #${bookingIdToCancel}\nName: ${stored.guestName || "—"}\nRoom: ${stored.room || "—"}`
         );
-        setTimeout(() => {
-          window.open(`https://wa.me/254713151177?text=${waMsg}`, "_blank");
-        }, 800);
-
+        setTimeout(() => { window.open(`https://wa.me/254713151177?text=${waMsg}`, "_blank"); }, 800);
       } else {
-        alert("Could not cancel booking. Please WhatsApp us directly.");
+        alert("Could not cancel. Please WhatsApp us directly.");
         btn.textContent = "✕ Cancel This Booking";
         btn.disabled = false;
       }
@@ -259,13 +248,11 @@
     }
   }
 
-  // Save booking creation time if not already saved
   if (stored.bookingId && !stored.createdAt) {
     stored.createdAt = new Date().toISOString();
     sessionStorage.setItem("milaBooking", JSON.stringify(stored));
   }
 
-  // Keep sessionStorage for 30 minutes
   setTimeout(() => sessionStorage.removeItem("milaBooking"), 30 * 60 * 1000);
 </script>
 
